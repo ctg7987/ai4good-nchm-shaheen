@@ -35,6 +35,21 @@ export interface Translations {
   completeEarly: string;
   taskCompleted: string;
   completeJournal: string;
+  todaysTasks: string;
+  chooseActivity: string;
+  breathingExerciseTitle: string;
+  breathingExerciseDesc: string;
+  breathingExerciseInstructions: string;
+  journalingTitle: string;
+  journalingDesc: string;
+  journalingInstructions: string;
+  journalingPlaceholder: string;
+  finish: string;
+  cancel: string;
+  seconds: string;
+  minutes: string;
+  youEarnedFeathers: string;
+  showProgress: string;
   
   // Impact page
   yourProgress: string;
@@ -115,6 +130,21 @@ export const translations: Record<Language, Translations> = {
     completeEarly: 'Complete Early',
     taskCompleted: 'Task Completed!',
     completeJournal: 'Complete Journal',
+    todaysTasks: 'Today\'s Tasks',
+    chooseActivity: 'Choose an activity to improve your emotional health',
+    breathingExerciseTitle: 'Breathing Exercise',
+    breathingExerciseDesc: '90 seconds of deep breathing',
+    breathingExerciseInstructions: 'Breathe deeply and calmly. Inhale for 4 seconds, hold for 4 seconds, exhale for 4 seconds',
+    journalingTitle: 'Daily Writing',
+    journalingDesc: '3 minutes of free writing',
+    journalingInstructions: 'Write about your feelings and thoughts today. No rules, just write freely',
+    journalingPlaceholder: 'Write here...',
+    finish: 'Finish',
+    cancel: 'Cancel',
+    seconds: 'seconds',
+    minutes: 'minutes',
+    youEarnedFeathers: 'You earned {count} feathers!',
+    showProgress: 'Show Progress',
     
     // Impact page
     yourProgress: 'Your Progress',
@@ -194,6 +224,21 @@ export const translations: Record<Language, Translations> = {
     completeEarly: 'أكمل مبكراً',
     taskCompleted: 'تمت المهمة!',
     completeJournal: 'أكمل اليوميات',
+    todaysTasks: 'مهام اليوم',
+    chooseActivity: 'اختر نشاطاً لتحسين صحتك العاطفية',
+    breathingExerciseTitle: 'تمرين التنفس',
+    breathingExerciseDesc: '90 ثانية من التنفس العميق',
+    breathingExerciseInstructions: 'تنفس بعمق وهدوء. استنشق لمدة 4 ثوان، احبس لمدة 4 ثوان، ازفر لمدة 4 ثوان',
+    journalingTitle: 'كتابة يومية',
+    journalingDesc: '3 دقائق من الكتابة الحرة',
+    journalingInstructions: 'اكتب عن مشاعرك وأفكارك اليوم. لا توجد قواعد، فقط اكتب بحرية',
+    journalingPlaceholder: 'اكتب هنا...',
+    finish: 'إنهاء',
+    cancel: 'إلغاء',
+    seconds: 'ثانية',
+    minutes: 'دقائق',
+    youEarnedFeathers: 'لقد حصلت على {count} ريشة!',
+    showProgress: 'عرض التقدم',
     
     // Impact page
     yourProgress: 'تقدمك',

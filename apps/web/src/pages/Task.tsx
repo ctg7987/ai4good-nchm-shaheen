@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { db } from '../lib/database';
 import { FeatherService } from '../lib/featherService';
 import { FeatherParticles } from '../components/FeatherParticles';
+import { LanguageService } from '../lib/language';
+import { useTranslations } from '../lib/translations';
 
 export const Task: React.FC = () => {
   const [taskType, setTaskType] = useState<'breathing' | 'journal' | null>(null);
@@ -11,6 +13,9 @@ export const Task: React.FC = () => {
   const [journalContent, setJournalContent] = useState('');
   const [feathers, setFeathers] = useState(0);
   const [particleTrigger, setParticleTrigger] = useState(0);
+  
+  const currentLanguage = LanguageService.getCurrentLanguage();
+  const t = useTranslations(currentLanguage);
 
   const startBreathing = () => {
     setTaskType('breathing');
@@ -83,12 +88,12 @@ export const Task: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           className="card"
         >
-          <h1 className="text-2xl font-bold mb-6">تمرين التنفس</h1>
+          <h1 className="text-2xl font-bold mb-6">{t.breathingExerciseTitle}</h1>
           <div className="text-6xl font-bold text-primary-500 mb-4">
             {formatTime(timeLeft)}
           </div>
           <p className="text-neutral-600 mb-6">
-            تنفس بعمق وهدوء. استنشق لمدة 4 ثوان، احبس لمدة 4 ثوان، ازفر لمدة 4 ثوان
+            {t.breathingExerciseInstructions}
           </p>
           <div className="w-32 h-32 mx-auto bg-primary-100 rounded-full flex items-center justify-center">
             <div className="w-16 h-16 bg-primary-500 rounded-full animate-pulse"></div>
@@ -107,20 +112,20 @@ export const Task: React.FC = () => {
           className="card"
         >
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">كتابة يومية</h1>
+            <h1 className="text-2xl font-bold">{t.journalingTitle}</h1>
             <div className="text-2xl font-bold text-primary-500">
               {formatTime(timeLeft)}
             </div>
           </div>
           
           <p className="text-neutral-600 mb-4">
-            اكتب عن مشاعرك وأفكارك اليوم. لا توجد قواعد، فقط اكتب بحرية
+            {t.journalingInstructions}
           </p>
           
           <textarea
             value={journalContent}
             onChange={(e) => setJournalContent(e.target.value)}
-            placeholder="اكتب هنا..."
+            placeholder={t.journalingPlaceholder}
             className="input min-h-[300px] resize-none"
             autoFocus
           />
@@ -130,7 +135,7 @@ export const Task: React.FC = () => {
               onClick={completeTask}
               className="btn-primary flex-1"
             >
-              إنهاء
+              {t.finish}
             </button>
             <button
               onClick={() => {
@@ -139,7 +144,7 @@ export const Task: React.FC = () => {
               }}
               className="btn-secondary"
             >
-              إلغاء
+              {t.cancel}
             </button>
           </div>
         </motion.div>
@@ -155,10 +160,10 @@ export const Task: React.FC = () => {
         className="text-center mb-8"
       >
         <h1 className="text-3xl font-bold text-primary-900 mb-4">
-          مهام اليوم
+          {t.todaysTasks}
         </h1>
         <p className="text-neutral-600">
-          اختر نشاطاً لتحسين صحتك العاطفية
+          {t.chooseActivity}
         </p>
       </motion.div>
 
@@ -169,9 +174,9 @@ export const Task: React.FC = () => {
           onClick={startBreathing}
         >
           <div className="text-4xl mb-4">🫁</div>
-          <h2 className="text-xl font-semibold mb-2">تمرين التنفس</h2>
-          <p className="text-neutral-600 mb-4">90 ثانية من التنفس العميق</p>
-          <div className="text-sm text-primary-600">⏱️ 90 ثانية</div>
+          <h2 className="text-xl font-semibold mb-2">{t.breathingExerciseTitle}</h2>
+          <p className="text-neutral-600 mb-4">{t.breathingExerciseDesc}</p>
+          <div className="text-sm text-primary-600">⏱️ 90 {t.seconds}</div>
         </motion.div>
 
         <motion.div
@@ -180,9 +185,9 @@ export const Task: React.FC = () => {
           onClick={startJournal}
         >
           <div className="text-4xl mb-4">📝</div>
-          <h2 className="text-xl font-semibold mb-2">كتابة يومية</h2>
-          <p className="text-neutral-600 mb-4">3 دقائق من الكتابة الحرة</p>
-          <div className="text-sm text-primary-600">⏱️ 3 دقائق</div>
+          <h2 className="text-xl font-semibold mb-2">{t.journalingTitle}</h2>
+          <p className="text-neutral-600 mb-4">{t.journalingDesc}</p>
+          <div className="text-sm text-primary-600">⏱️ 3 {t.minutes}</div>
         </motion.div>
       </div>
 
@@ -194,7 +199,7 @@ export const Task: React.FC = () => {
         >
           <div className="text-2xl">🪶</div>
           <p className="text-primary-600 font-medium">
-            لقد حصلت على {feathers} ريشة!
+            {t.youEarnedFeathers.replace('{count}', feathers.toString())}
           </p>
         </motion.div>
       )}
@@ -204,7 +209,7 @@ export const Task: React.FC = () => {
           onClick={() => window.location.href = '/impact'}
           className="btn-secondary"
         >
-          عرض التقدم
+          {t.showProgress}
         </button>
       </div>
       
