@@ -61,7 +61,7 @@ export const CheckIn: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4" style={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
       <FeatherParticles trigger={particleTrigger} />
       
       <div className="w-full max-w-6xl mx-auto">
@@ -75,10 +75,10 @@ export const CheckIn: React.FC = () => {
           <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-8 shadow-2xl">
             <span className="text-6xl">💭</span>
           </div>
-          <h1 className="text-7xl sm:text-8xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-8">
+          <h1 className="text-7xl sm:text-8xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-8" style={{fontSize: '6rem', fontWeight: 'bold', textAlign: 'center'}}>
             How are you feeling today?
           </h1>
-          <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed" style={{fontSize: '1.5rem', textAlign: 'center', lineHeight: '1.6'}}>
             Take a moment to reflect on your feelings. This is a safe place to explore what's inside you
           </p>
         </motion.div>
@@ -91,8 +91,8 @@ export const CheckIn: React.FC = () => {
           className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-12 mb-12"
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-slate-800 mb-6">Choose your feelings</h2>
-            <p className="text-2xl text-slate-600">Click on the emotions that reflect your current state</p>
+            <h2 className="text-4xl font-bold text-slate-800 mb-6" style={{fontSize: '2.5rem', textAlign: 'center'}}>Choose your feelings</h2>
+            <p className="text-2xl text-slate-600" style={{fontSize: '1.5rem', textAlign: 'center'}}>Click on the emotions that reflect your current state</p>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -114,7 +114,13 @@ export const CheckIn: React.FC = () => {
                     ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-xl scale-110'
                     : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-lg hover:bg-blue-50/50'
                 }`}
-                style={{ backgroundColor: selectedMood?.emotion.id === emotion.id ? undefined : emotion.color + '20' }}
+                style={{ 
+                  padding: '3rem', 
+                  minHeight: '250px', 
+                  fontSize: '2rem', 
+                  textAlign: 'center',
+                  backgroundColor: selectedMood?.emotion.id === emotion.id ? undefined : emotion.color + '20'
+                }}
                 aria-label={`Choose ${emotion.nameAr}`}
                 role="button"
               >
@@ -131,10 +137,10 @@ export const CheckIn: React.FC = () => {
                   )}
                 </AnimatePresence>
                 
-                <div className="text-6xl mb-6 group-hover:scale-125 transition-transform duration-200">
+                <div className="text-6xl mb-6 group-hover:scale-125 transition-transform duration-200" style={{fontSize: '4rem'}}>
                   {emotion.emoji}
                 </div>
-                <div className="text-xl font-bold text-slate-700 group-hover:text-blue-700 transition-colors">
+                <div className="text-xl font-bold text-slate-700 group-hover:text-blue-700 transition-colors" style={{fontSize: '1.5rem', fontWeight: 'bold'}}>
                   {emotion.nameAr}
                 </div>
               </motion.button>
