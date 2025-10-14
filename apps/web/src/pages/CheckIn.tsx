@@ -6,6 +6,8 @@ import { db } from '../lib/database';
 import { apiClient } from '../lib/api';
 import { FeatherService } from '../lib/featherService';
 import { FeatherParticles } from '../components/FeatherParticles';
+import { LanguageService } from '../lib/language';
+import { useTranslations } from '../lib/translations';
 
 export const CheckIn: React.FC = () => {
   const navigate = useNavigate();
@@ -13,6 +15,9 @@ export const CheckIn: React.FC = () => {
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [particleTrigger, setParticleTrigger] = useState(0);
+  
+  const currentLanguage = LanguageService.getCurrentLanguage();
+  const t = useTranslations(currentLanguage);
 
   const handleMoodSelect = (emotion: typeof PLUTCHIK_EMOTIONS[0], intensity: number) => {
     setSelectedMood({ emotion, intensity });
@@ -76,10 +81,10 @@ export const CheckIn: React.FC = () => {
             <span className="text-6xl">💭</span>
           </div>
           <h1 className="text-7xl sm:text-8xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-8" style={{fontSize: '6rem', fontWeight: 'bold', textAlign: 'center'}}>
-            How are you feeling today?
+            {t.howAreYouFeeling}
           </h1>
           <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed" style={{fontSize: '1.5rem', textAlign: 'center', lineHeight: '1.6'}}>
-            Take a moment to reflect on your feelings. This is a safe place to explore what's inside you
+            {t.takeAMoment}
           </p>
         </motion.div>
 
@@ -91,8 +96,8 @@ export const CheckIn: React.FC = () => {
           className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-12 mb-12"
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-slate-800 mb-6" style={{fontSize: '2.5rem', textAlign: 'center'}}>Choose your feelings</h2>
-            <p className="text-2xl text-slate-600" style={{fontSize: '1.5rem', textAlign: 'center'}}>Click on the emotions that reflect your current state</p>
+            <h2 className="text-4xl font-bold text-slate-800 mb-6" style={{fontSize: '2.5rem', textAlign: 'center'}}>{t.chooseYourFeelings}</h2>
+            <p className="text-2xl text-slate-600" style={{fontSize: '1.5rem', textAlign: 'center'}}>{t.clickEmotions}</p>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">

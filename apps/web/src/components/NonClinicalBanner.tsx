@@ -1,17 +1,20 @@
 import React from 'react';
+import { LanguageService } from '../lib/language';
+import { useTranslations } from '../lib/translations';
 
 export const NonClinicalBanner: React.FC = () => {
+  const currentLanguage = LanguageService.getCurrentLanguage();
+  const t = useTranslations(currentLanguage);
+
   return (
     <div 
-      className="bg-accent-100 border-b border-accent-200 py-2 px-4"
+      className="bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 py-2 px-4 text-center text-sm font-medium"
       role="banner"
-      aria-label="تنبيه غير سريري"
+      aria-label="Non-clinical alert"
     >
-      <div className="container mx-auto text-center">
-        <p className="text-accent-800 font-medium text-sm" role="alert">
-          غير سريري — أداة للتعلم العاطفي فقط
-        </p>
-      </div>
+      <p role="alert" className="m-0">
+        {t.nonClinicalBanner}
+      </p>
     </div>
   );
 };
