@@ -61,7 +61,7 @@ export const CheckIn: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4" style={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4" style={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
       <FeatherParticles trigger={particleTrigger} />
       
       <div className="w-full max-w-6xl mx-auto">
@@ -72,7 +72,7 @@ export const CheckIn: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-8 shadow-2xl">
+          <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mb-8 shadow-2xl">
             <span className="text-6xl">💭</span>
           </div>
           <h1 className="text-7xl sm:text-8xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-8" style={{fontSize: '6rem', fontWeight: 'bold', textAlign: 'center'}}>
@@ -109,15 +109,15 @@ export const CheckIn: React.FC = () => {
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleMoodSelect(emotion, 1)}
-                className={`group relative p-8 rounded-3xl border-3 transition-all duration-300 ${
+                className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 ${
                   selectedMood?.emotion.id === emotion.id
-                    ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-xl scale-110'
-                    : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-lg hover:bg-blue-50/50'
+                    ? 'border-green-500 bg-gradient-to-br from-green-50 to-emerald-50 shadow-xl scale-105'
+                    : 'border-slate-200 bg-white hover:border-green-300 hover:shadow-lg hover:bg-green-50/50'
                 }`}
                 style={{ 
-                  padding: '3rem', 
-                  minHeight: '250px', 
-                  fontSize: '2rem', 
+                  padding: '1.5rem', 
+                  minHeight: '180px', 
+                  fontSize: '1.2rem', 
                   textAlign: 'center',
                   backgroundColor: selectedMood?.emotion.id === emotion.id ? undefined : emotion.color + '20'
                 }}
@@ -137,10 +137,10 @@ export const CheckIn: React.FC = () => {
                   )}
                 </AnimatePresence>
                 
-                <div className="text-6xl mb-6 group-hover:scale-125 transition-transform duration-200" style={{fontSize: '4rem'}}>
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200" style={{fontSize: '2.5rem'}}>
                   {emotion.emoji}
                 </div>
-                <div className="text-xl font-bold text-slate-700 group-hover:text-blue-700 transition-colors" style={{fontSize: '1.5rem', fontWeight: 'bold'}}>
+                <div className="text-lg font-bold text-slate-700 group-hover:text-green-700 transition-colors" style={{fontSize: '1.1rem', fontWeight: 'bold'}}>
                   {emotion.nameAr}
                 </div>
               </motion.button>
@@ -197,9 +197,9 @@ export const CheckIn: React.FC = () => {
                   transition: { duration: 0.2 }
                 } : {}}
                 whileTap={!isSubmitting ? { scale: 0.95 } : {}}
-                className={`relative px-20 py-8 rounded-3xl font-bold text-3xl transition-all duration-300 ${
+                className={`relative px-16 py-6 rounded-2xl font-bold text-2xl transition-all duration-300 ${
                   !isSubmitting
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-2xl hover:shadow-3xl hover:from-blue-700 hover:to-indigo-700'
+                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-2xl hover:shadow-3xl hover:from-green-700 hover:to-emerald-700'
                     : 'bg-slate-300 text-slate-500 cursor-not-allowed'
                 }`}
               >
