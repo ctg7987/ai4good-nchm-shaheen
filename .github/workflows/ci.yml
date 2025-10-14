@@ -1,0 +1,106 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  web-build:
+    name: Web Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared package
+        run: npm run build:shared
+
+      - name: Build web app
+        run: npm run build:web
+
+      - name: Lint web app
+        run: npm run lint:web
+
+  api-tests:
+    name: API Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd apps/api
+          pip install -e .
+
+      - name: Lint with ruff
+        run: |
+          cd apps/api
+          ruff check .
+
+      - name: Format check with black
+        run: |
+          cd apps/api
+          black --check .
+
+      - name: Type check with mypy
+        run: |
+          cd apps/api
+          mypy .
+
+      - name: Test with pytest
+        run: |
+          cd apps/api
+          pytest
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    services:
+      qdrant:
+        image: qdrant/qdrant:latest
+        ports:
+          - 6333:6333
+        options: >-
+          --health-cmd "curl -f http://localhost:6333/health || exit 1"
+          --health-interval 30s
+          --health-timeout 10s
+          --health-retries 3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd apps/api
+          pip install -e .
+
+      - name: Run integration tests
+        run: |
+          cd apps/api
+          pytest -m integration
+        env:
+          QDRANT_URL: http://localhost:6333
+

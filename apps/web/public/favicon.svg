@@ -1,0 +1,35 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="falconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#05585F;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00A29D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFCC66;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Falcon body -->
+  <ellipse cx="16" cy="20" rx="8" ry="6" fill="url(#falconGradient)" opacity="0.9"/>
+  
+  <!-- Falcon head -->
+  <ellipse cx="16" cy="12" rx="6" ry="5" fill="url(#falconGradient)" opacity="0.8"/>
+  
+  <!-- Falcon beak -->
+  <path d="M 20 10 L 24 8 L 22 12 Z" fill="#2D3748"/>
+  
+  <!-- Falcon eye -->
+  <circle cx="18" cy="10" r="1.5" fill="#FFFFFF"/>
+  <circle cx="18" cy="10" r="0.8" fill="#2D3748"/>
+  
+  <!-- Falcon wings -->
+  <path d="M 8 18 Q 4 14 8 10 Q 12 14 8 18" fill="url(#falconGradient)" opacity="0.7"/>
+  <path d="M 24 18 Q 28 14 24 10 Q 20 14 24 18" fill="url(#falconGradient)" opacity="0.7"/>
+  
+  <!-- Feather details -->
+  <path d="M 8 16 L 6 14 L 8 12" stroke="#2D3748" stroke-width="0.5" fill="none"/>
+  <path d="M 24 16 L 26 14 L 24 12" stroke="#2D3748" stroke-width="0.5" fill="none"/>
+  
+  <!-- Tail feathers -->
+  <path d="M 12 26 L 10 30 L 14 28" fill="url(#falconGradient)" opacity="0.6"/>
+  <path d="M 16 26 L 16 30 L 18 28" fill="url(#falconGradient)" opacity="0.6"/>
+  <path d="M 20 26 L 22 30 L 18 28" fill="url(#falconGradient)" opacity="0.6"/>
+</svg>
