@@ -33,7 +33,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
     try {
       // Step 1: Navigate to CheckIn and simulate mood selection
       setCurrentStep(1);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Step 2: Generate narrative
       setCurrentStep(2);
@@ -41,7 +41,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
         text_ar: "أشعر بالتوتر قبل الامتحان",
         mood: "fear"
       });
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 3000));
       
       // Step 3: Navigate to Story with narrative data
       setCurrentStep(3);
@@ -52,26 +52,26 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
           isDemo: true
         } 
       });
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 4000));
       
       // Step 4: Navigate to Task and complete it
       setCurrentStep(4);
       navigate('/task');
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Simulate task completion
       await FeatherService.awardTaskCompletion('breathing');
       setParticleTrigger(prev => prev + 1);
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
       
       // Step 5: Show feather earning
       setCurrentStep(5);
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Step 6: Navigate to Impact
       setCurrentStep(6);
       navigate('/impact');
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
     } catch (error) {
       console.error('Demo error:', error);
@@ -109,8 +109,17 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-white rounded-lg p-6 max-w-md mx-4"
+              className="bg-white rounded-lg p-6 max-w-md mx-4 relative"
             >
+              <button
+                onClick={() => {
+                  setIsRunning(false);
+                  setCurrentStep(0);
+                }}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
               <h3 className="text-xl font-bold text-center mb-4">
                 عرض توضيحي - رحلة المستخدم
               </h3>
@@ -143,8 +152,14 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
                 ))}
               </div>
               
-              <div className="mt-4 text-center">
-                <div className="text-sm text-gray-500">
+              <div className="mt-4">
+                <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                  <div 
+                    className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${(currentStep / demoSteps.length) * 100}%` }}
+                  ></div>
+                </div>
+                <div className="text-sm text-gray-500 text-center">
                   الخطوة {currentStep} من {demoSteps.length}
                 </div>
               </div>
