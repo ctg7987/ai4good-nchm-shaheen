@@ -1,0 +1,14 @@
+{
+  "name": "@ncmh/api",
+  "version": "1.0.0",
+  "description": "FastAPI backend for NCMH wellbeing app",
+  "scripts": {
+    "dev": "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "build": "python build.py",
+    "test": "pytest -v",
+    "lint": "ruff check . && black --check ."
+  },
+  "engines": {
+    "python": ">=3.9"
+  }
+}
