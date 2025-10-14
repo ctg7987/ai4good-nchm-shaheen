@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FeatherService } from '../lib/featherService';
 import { RedemptionModal } from './RedemptionModal';
+import { LanguageService } from '../lib/language';
+import { useTranslations } from '../lib/translations';
 
 interface FeatherCounterProps {
   showRedeem?: boolean;
@@ -11,6 +13,9 @@ export const FeatherCounter: React.FC<FeatherCounterProps> = ({ showRedeem = tru
   const [totalFeathers, setTotalFeathers] = useState(0);
   const [isRedemptionOpen, setIsRedemptionOpen] = useState(false);
   // const [particleTrigger] = useState(0);
+  
+  const currentLanguage = LanguageService.getCurrentLanguage();
+  const t = useTranslations(currentLanguage);
 
   useEffect(() => {
     const loadFeathers = async () => {
@@ -25,7 +30,10 @@ export const FeatherCounter: React.FC<FeatherCounterProps> = ({ showRedeem = tru
     // In a real app, this would make an API call
     console.log(`Redeemed option: ${optionId}`);
     // For demo, we'll just show a success message
-    alert(`تم استبدال الريش بنجاح! (${optionId})`);
+    const successMessage = currentLanguage === 'ar' 
+      ? `تم استبدال الريش بنجاح! (${optionId})`
+      : `Feathers redeemed successfully! (${optionId})`;
+    alert(successMessage);
   };
 
   // const triggerParticles = () => {
@@ -51,7 +59,7 @@ export const FeatherCounter: React.FC<FeatherCounterProps> = ({ showRedeem = tru
             onClick={() => setIsRedemptionOpen(true)}
             className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-full text-sm font-medium transition-colors"
           >
-            استبدال
+            {t.redeem}
           </button>
         )}
       </motion.div>

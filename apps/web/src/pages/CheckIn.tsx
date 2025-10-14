@@ -146,7 +146,7 @@ export const CheckIn: React.FC = () => {
                   {emotion.emoji}
                 </div>
                 <div className="text-lg font-bold text-slate-700 group-hover:text-green-700 transition-colors" style={{fontSize: '1.1rem', fontWeight: 'bold'}}>
-                  {emotion.nameAr}
+                  {currentLanguage === 'ar' ? emotion.nameAr : emotion.name}
                 </div>
               </motion.button>
             ))}
@@ -164,8 +164,8 @@ export const CheckIn: React.FC = () => {
               className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-12 mb-12"
             >
               <div className="text-center mb-10">
-                <h3 className="text-4xl font-bold text-slate-800 mb-6">Share your thoughts</h3>
-                <p className="text-2xl text-slate-600">Write any additional thoughts or feelings you'd like to share</p>
+                <h3 className="text-4xl font-bold text-slate-800 mb-6">{t.shareYourThoughts}</h3>
+                <p className="text-2xl text-slate-600">{t.writeAdditionalThoughts}</p>
               </div>
               
               <div className="relative">
@@ -211,11 +211,11 @@ export const CheckIn: React.FC = () => {
                 {isSubmitting ? (
                   <div className="flex items-center justify-center space-x-4">
                     <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Processing...</span>
+                    <span>{t.processing}</span>
                   </div>
                 ) : (
                   <div className="flex items-center justify-center space-x-4">
-                    <span>Start Your Journey</span>
+                    <span>{t.startYourJourney}</span>
                     <span className="text-4xl">✨</span>
                   </div>
                 )}
