@@ -41,7 +41,7 @@ function App() {
       </main>
       
       {/* Demo Mode - Only visible in development */}
-      <DemoMode isVisible={import.meta.env.DEV} />
+      <DemoMode isVisible={(import.meta as any).env?.DEV || false} />
     </div>
   );
 }

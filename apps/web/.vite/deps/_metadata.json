@@ -1,0 +1,53 @@
+{
+  "hash": "9ff22e4f",
+  "browserHash": "edb4c827",
+  "optimized": {
+    "react": {
+      "src": "../../../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "0a9b6bc1",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "28c8738a",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "4ab275ff",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "23a3298d",
+      "needsInterop": false
+    },
+    "recharts": {
+      "src": "../../../../node_modules/recharts/es6/index.js",
+      "file": "recharts.js",
+      "fileHash": "b28f8ab2",
+      "needsInterop": false
+    },
+    "dexie": {
+      "src": "../../../../node_modules/dexie/dist/modern/dexie.mjs",
+      "file": "dexie.js",
+      "fileHash": "d6f18520",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-BURPDHL3": {
+      "file": "chunk-BURPDHL3.js"
+    },
+    "chunk-UN4VIYDB": {
+      "file": "chunk-UN4VIYDB.js"
+    },
+    "chunk-ROME4SDB": {
+      "file": "chunk-ROME4SDB.js"
+    }
+  }
+}

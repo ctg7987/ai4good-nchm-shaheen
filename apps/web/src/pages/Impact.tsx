@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { db } from '../lib/database';
+// import { db } from '../lib/database';
 import { FeatherService } from '../lib/featherService';
 
 interface ChartData {

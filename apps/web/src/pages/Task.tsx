@@ -29,7 +29,7 @@ export const Task: React.FC = () => {
 
     try {
       // Save entry to database
-      const entryId = await db.entries.add({
+      await db.entries.add({
         sessionId: 1, // This should come from current session
         type: taskType,
         content: taskType === 'journal' ? journalContent : 'Breathing exercise completed',
@@ -51,7 +51,7 @@ export const Task: React.FC = () => {
   };
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
     
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {

@@ -10,7 +10,7 @@ interface FeatherCounterProps {
 export const FeatherCounter: React.FC<FeatherCounterProps> = ({ showRedeem = true }) => {
   const [totalFeathers, setTotalFeathers] = useState(0);
   const [isRedemptionOpen, setIsRedemptionOpen] = useState(false);
-  const [particleTrigger, setParticleTrigger] = useState(0);
+  // const [particleTrigger] = useState(0);
 
   useEffect(() => {
     const loadFeathers = async () => {
@@ -28,9 +28,9 @@ export const FeatherCounter: React.FC<FeatherCounterProps> = ({ showRedeem = tru
     alert(`تم استبدال الريش بنجاح! (${optionId})`);
   };
 
-  const triggerParticles = () => {
-    setParticleTrigger(prev => prev + 1);
-  };
+  // const triggerParticles = () => {
+  //   setParticleTrigger(prev => prev + 1);
+  // };
 
   return (
     <>
