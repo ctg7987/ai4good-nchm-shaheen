@@ -2,19 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Arabic font imports */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');
+/* Font imports */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   html {
-    font-family: 'Inter', 'Noto Sans Arabic', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     direction: ltr;
     scroll-behavior: smooth;
   }
   
   body {
-    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-slate-900;
+    @apply bg-gradient-to-br from-blue-50 to-indigo-100 text-slate-900;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -24,41 +23,11 @@
   * {
     box-sizing: border-box;
   }
-
-  /* Arabic text support */
-  [lang="ar"] {
-    direction: rtl;
-    text-align: right;
-  }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
-  }
-  
-  .btn-secondary {
-    @apply bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-800 font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg;
-  }
-  
-  .card {
-    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6 transition-all duration-300 hover:shadow-2xl;
-  }
-  
-  .input {
-    @apply w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm placeholder-slate-400;
-  }
-
-  .glass {
-    @apply bg-white/25 backdrop-blur-md border border-white/20;
-  }
-
-  .floating {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1;
   }
 }
 
@@ -66,84 +35,4 @@
   .text-gradient {
     @apply bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent;
   }
-
-  .bg-pattern {
-    background-image: radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.1) 1px, transparent 0);
-    background-size: 20px 20px;
-  }
-}
-
-/* Custom animations */
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0px); 
-  }
-  50% { 
-    transform: translateY(-10px); 
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); 
-  }
-  50% { 
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); 
-  }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-slate-100 rounded-full;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gradient-to-b from-blue-500 to-indigo-500 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply from-blue-600 to-indigo-600;
-}
-
-/* Selection styles */
-::selection {
-  @apply bg-blue-200 text-blue-900;
-}
-
-/* Focus styles */
-.focus-ring {
-  @apply focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500;
-}
-
-/* Loading spinner */
-.spinner {
-  @apply inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin;
-}
-
-/* Emotion button styles */
-.emotion-btn {
-  @apply relative p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-lg;
-}
-
-.emotion-btn-selected {
-  @apply border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg scale-105;
-}
-
-.emotion-btn-unselected {
-  @apply border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50/50;
 }

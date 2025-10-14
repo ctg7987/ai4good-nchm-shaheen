@@ -61,31 +61,24 @@ export const CheckIn: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <FeatherParticles trigger={particleTrigger} />
       
-      {/* Floating Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-200 rounded-full opacity-20 animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-indigo-200 rounded-full opacity-30 animate-pulse delay-1000"></div>
-        <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-purple-200 rounded-full opacity-25 animate-pulse delay-2000"></div>
-        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-cyan-200 rounded-full opacity-20 animate-pulse delay-3000"></div>
-      </div>
-
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center justify-center min-h-screen">
+      <div className="w-full max-w-6xl mx-auto">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-12 w-full"
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-8 shadow-lg">
-            <span className="text-4xl">💭</span>
+          <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-8 shadow-2xl">
+            <span className="text-6xl">💭</span>
           </div>
-          <h1 className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-6">
+          <h1 className="text-7xl sm:text-8xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-8">
             How are you feeling today?
           </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
             Take a moment to reflect on your feelings. This is a safe place to explore what's inside you
           </p>
         </motion.div>
@@ -95,14 +88,14 @@ export const CheckIn: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 p-10 mb-8 w-full max-w-5xl"
+          className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-12 mb-12"
         >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-slate-800 mb-4">Choose your feelings</h2>
-            <p className="text-xl text-slate-600">Click on the emotions that reflect your current state</p>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-slate-800 mb-6">Choose your feelings</h2>
+            <p className="text-2xl text-slate-600">Click on the emotions that reflect your current state</p>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
             {PLUTCHIK_EMOTIONS.map((emotion, index) => (
               <motion.button
                 key={emotion.id}
@@ -110,19 +103,19 @@ export const CheckIn: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ 
-                  scale: 1.05,
-                  y: -5,
+                  scale: 1.1,
+                  y: -10,
                   transition: { duration: 0.2 }
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleMoodSelect(emotion, 1)}
-                className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 ${
+                className={`group relative p-8 rounded-3xl border-3 transition-all duration-300 ${
                   selectedMood?.emotion.id === emotion.id
-                    ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg scale-105'
-                    : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-md hover:bg-blue-50/50'
+                    ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-xl scale-110'
+                    : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-lg hover:bg-blue-50/50'
                 }`}
                 style={{ backgroundColor: selectedMood?.emotion.id === emotion.id ? undefined : emotion.color + '20' }}
-                aria-label={`اختر ${emotion.nameAr}`}
+                aria-label={`Choose ${emotion.nameAr}`}
                 role="button"
               >
                 <AnimatePresence>
@@ -131,17 +124,17 @@ export const CheckIn: React.FC = () => {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center"
+                      className="absolute -top-3 -right-3 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center"
                     >
-                      <span className="text-white text-sm">✓</span>
+                      <span className="text-white text-lg">✓</span>
                     </motion.div>
                   )}
                 </AnimatePresence>
                 
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-200">
+                <div className="text-6xl mb-6 group-hover:scale-125 transition-transform duration-200">
                   {emotion.emoji}
                 </div>
-                <div className="text-lg font-semibold text-slate-700 group-hover:text-blue-700 transition-colors">
+                <div className="text-xl font-bold text-slate-700 group-hover:text-blue-700 transition-colors">
                   {emotion.nameAr}
                 </div>
               </motion.button>
@@ -157,11 +150,11 @@ export const CheckIn: React.FC = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 p-8 mb-8"
+              className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-12 mb-12"
             >
-              <div className="text-center mb-8">
-                <h3 className="text-3xl font-bold text-slate-800 mb-4">Share your thoughts</h3>
-                <p className="text-xl text-slate-600">Write any additional thoughts or feelings you'd like to share</p>
+              <div className="text-center mb-10">
+                <h3 className="text-4xl font-bold text-slate-800 mb-6">Share your thoughts</h3>
+                <p className="text-2xl text-slate-600">Write any additional thoughts or feelings you'd like to share</p>
               </div>
               
               <div className="relative">
@@ -169,9 +162,9 @@ export const CheckIn: React.FC = () => {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Write here about your feelings or what you're going through... don't hesitate to share anything that comes to mind"
-                  className="w-full h-48 p-8 border-2 border-slate-200 rounded-2xl resize-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 text-xl leading-relaxed placeholder-slate-400"
+                  className="w-full h-60 p-8 border-3 border-slate-200 rounded-2xl resize-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 text-2xl leading-relaxed placeholder-slate-400"
                 />
-                <div className="absolute bottom-6 left-6 text-lg text-slate-400">
+                <div className="absolute bottom-8 left-8 text-xl text-slate-400">
                   {notes.length} characters
                 </div>
               </div>
@@ -193,26 +186,26 @@ export const CheckIn: React.FC = () => {
                 onClick={handleSubmit}
                 disabled={isSubmitting}
                 whileHover={!isSubmitting ? { 
-                  scale: 1.05,
-                  y: -2,
+                  scale: 1.1,
+                  y: -5,
                   transition: { duration: 0.2 }
                 } : {}}
-                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-                className={`relative px-16 py-6 rounded-2xl font-bold text-xl transition-all duration-300 ${
+                whileTap={!isSubmitting ? { scale: 0.95 } : {}}
+                className={`relative px-20 py-8 rounded-3xl font-bold text-3xl transition-all duration-300 ${
                   !isSubmitting
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-xl hover:shadow-2xl hover:from-blue-700 hover:to-indigo-700'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-2xl hover:shadow-3xl hover:from-blue-700 hover:to-indigo-700'
                     : 'bg-slate-300 text-slate-500 cursor-not-allowed'
                 }`}
               >
                 {isSubmitting ? (
-                  <div className="flex items-center justify-center space-x-3">
-                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="flex items-center justify-center space-x-4">
+                    <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
                     <span>Processing...</span>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center space-x-3">
+                  <div className="flex items-center justify-center space-x-4">
                     <span>Start Your Journey</span>
-                    <span className="text-2xl">✨</span>
+                    <span className="text-4xl">✨</span>
                   </div>
                 )}
               </motion.button>
