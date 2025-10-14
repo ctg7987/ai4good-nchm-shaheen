@@ -54,6 +54,20 @@ export interface Translations {
   // Non-clinical banner
   nonClinicalBanner: string;
   
+  // Redemption modal
+  redeemFeathers: string;
+  feathers: string;
+  donateNCMH: string;
+  donateNCMHDesc: string;
+  coffeeVoucher: string;
+  coffeeVoucherDesc: string;
+  plantTree: string;
+  plantTreeDesc: string;
+  meditationRetreat: string;
+  meditationRetreatDesc: string;
+  unavailable: string;
+  experimentalNote: string;
+  
   // Emotions
   joy: string;
   trust: string;
@@ -120,6 +134,20 @@ export const translations: Record<Language, Translations> = {
     // Non-clinical banner
     nonClinicalBanner: 'Non-clinical — Emotional learning tool only',
     
+    // Redemption modal
+    redeemFeathers: 'Redeem Feathers',
+    feathers: 'feathers',
+    donateNCMH: 'Donate NCMH Minutes',
+    donateNCMHDesc: 'Donate minutes of your time to help others',
+    coffeeVoucher: 'Coffee Voucher',
+    coffeeVoucherDesc: 'Free coffee voucher from a local cafe',
+    plantTree: 'Plant a Tree',
+    plantTreeDesc: 'Plant a tree in a public park',
+    meditationRetreat: 'Meditation Retreat',
+    meditationRetreatDesc: 'Meditation journey in nature',
+    unavailable: 'Unavailable',
+    experimentalNote: '💡 These are experimental options. In the real app, there will be real partnerships with local institutions.',
+    
     // Emotions
     joy: 'Joy',
     trust: 'Trust',
@@ -184,6 +212,20 @@ export const translations: Record<Language, Translations> = {
     
     // Non-clinical banner
     nonClinicalBanner: 'غير سريري — أداة للتعلم العاطفي فقط',
+    
+    // Redemption modal
+    redeemFeathers: 'استبدال الريش',
+    feathers: 'ريشة',
+    donateNCMH: 'تبرع لدقائق NCMH',
+    donateNCMHDesc: 'تبرع بدقائق من وقتك لمساعدة الآخرين',
+    coffeeVoucher: 'قسيمة قهوة',
+    coffeeVoucherDesc: 'قسيمة لقهوة مجانية من مقهى محلي',
+    plantTree: 'ازرع شجرة',
+    plantTreeDesc: 'ازرع شجرة في حديقة عامة',
+    meditationRetreat: 'رحلة تأمل',
+    meditationRetreatDesc: 'رحلة تأمل في الطبيعة',
+    unavailable: 'غير متاح',
+    experimentalNote: '💡 هذه خيارات تجريبية. في التطبيق الحقيقي، ستكون هناك شراكات حقيقية مع المؤسسات المحلية.',
     
     // Emotions
     joy: 'فرح',

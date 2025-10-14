@@ -1,10 +1,12 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LanguageService } from '../lib/language';
+import { useTranslations } from '../lib/translations';
 
 interface RedemptionOption {
   id: string;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
   cost: number;
   icon: string;
   available: boolean;
@@ -20,32 +22,32 @@ interface RedemptionModalProps {
 const redemptionOptions: RedemptionOption[] = [
   {
     id: 'donate_ncmh',
-    title: 'تبرع لدقائق NCMH',
-    description: 'تبرع بدقائق من وقتك لمساعدة الآخرين',
+    titleKey: 'donateNCMH',
+    descriptionKey: 'donateNCMHDesc',
     cost: 5,
     icon: '❤️',
     available: true,
   },
   {
     id: 'coffee_voucher',
-    title: 'قسيمة قهوة',
-    description: 'قسيمة لقهوة مجانية من مقهى محلي',
+    titleKey: 'coffeeVoucher',
+    descriptionKey: 'coffeeVoucherDesc',
     cost: 10,
     icon: '☕',
     available: true,
   },
   {
     id: 'plant_tree',
-    title: 'ازرع شجرة',
-    description: 'ازرع شجرة في حديقة عامة',
+    titleKey: 'plantTree',
+    descriptionKey: 'plantTreeDesc',
     cost: 15,
     icon: '🌳',
     available: true,
   },
   {
     id: 'meditation_retreat',
-    title: 'رحلة تأمل',
-    description: 'رحلة تأمل في الطبيعة',
+    titleKey: 'meditationRetreat',
+    descriptionKey: 'meditationRetreatDesc',
     cost: 25,
     icon: '🧘‍♀️',
     available: false,
@@ -58,6 +60,8 @@ export const RedemptionModal: React.FC<RedemptionModalProps> = ({
   totalFeathers,
   onRedeem,
 }) => {
+  const currentLanguage = LanguageService.getCurrentLanguage();
+  const t = useTranslations(currentLanguage);
   const handleRedeem = (option: RedemptionOption) => {
     if (totalFeathers >= option.cost && option.available) {
       onRedeem(option.id);
@@ -84,7 +88,7 @@ export const RedemptionModal: React.FC<RedemptionModalProps> = ({
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">استبدال الريش</h2>
+                <h2 className="text-2xl font-bold text-gray-800">{t.redeemFeathers}</h2>
                 <button
                   onClick={onClose}
                   className="text-gray-500 hover:text-gray-700 text-2xl"
@@ -99,7 +103,7 @@ export const RedemptionModal: React.FC<RedemptionModalProps> = ({
                   <span className="text-2xl font-bold text-yellow-600">
                     {totalFeathers}
                   </span>
-                  <span className="text-gray-600 mr-2">ريشة</span>
+                  <span className="text-gray-600 mr-2">{t.feathers}</span>
                 </div>
               </div>
 
@@ -124,10 +128,10 @@ export const RedemptionModal: React.FC<RedemptionModalProps> = ({
                         <span className="text-2xl ml-3">{option.icon}</span>
                         <div>
                           <h3 className="font-semibold text-gray-800">
-                            {option.title}
+                            {t[option.titleKey as keyof typeof t]}
                           </h3>
                           <p className="text-sm text-gray-600">
-                            {option.description}
+                            {t[option.descriptionKey as keyof typeof t]}
                           </p>
                         </div>
                       </div>
@@ -139,7 +143,7 @@ export const RedemptionModal: React.FC<RedemptionModalProps> = ({
                           <span className="text-sm text-gray-500 mr-1">🪶</span>
                         </div>
                         {!option.available && (
-                          <span className="text-xs text-red-500">غير متاح</span>
+                          <span className="text-xs text-red-500">{t.unavailable}</span>
                         )}
                       </div>
                     </div>
@@ -149,7 +153,7 @@ export const RedemptionModal: React.FC<RedemptionModalProps> = ({
 
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <p className="text-sm text-blue-800 text-center">
-                  💡 هذه خيارات تجريبية. في التطبيق الحقيقي، ستكون هناك شراكات حقيقية مع المؤسسات المحلية.
+                  {t.experimentalNote}
                 </p>
               </div>
             </div>
