@@ -55,6 +55,14 @@ export interface Translations {
   yourProgress: string;
   trackYourJourney: string;
   totalFeathers: string;
+  moodTrend: string;
+  feathersEarnedTitle: string;
+  sessionsCompleted: string;
+  consecutiveDays: string;
+  startNewSession: string;
+  pieTasksCompleted: string;
+  pieCheckins: string;
+  pieReflections: string;
   tasksCompleted: string;
   daysActive: string;
   
@@ -150,6 +158,14 @@ export const translations: Record<Language, Translations> = {
     yourProgress: 'Your Progress',
     trackYourJourney: 'Track your journey and see how you\'ve grown',
     totalFeathers: 'Total Feathers',
+    moodTrend: 'Mood Trend',
+    feathersEarnedTitle: 'Feathers Earned',
+    sessionsCompleted: 'Sessions Completed',
+    consecutiveDays: 'Consecutive Days',
+    startNewSession: 'Start New Session',
+    pieTasksCompleted: 'Tasks Completed',
+    pieCheckins: 'Check-ins',
+    pieReflections: 'Reflections',
     tasksCompleted: 'Tasks Completed',
     daysActive: 'Days Active',
     
@@ -244,6 +260,14 @@ export const translations: Record<Language, Translations> = {
     yourProgress: 'تقدمك',
     trackYourJourney: 'تتبع رحلتك وانظر كيف تطورت',
     totalFeathers: 'إجمالي الريش',
+    moodTrend: 'اتجاه المزاج',
+    feathersEarnedTitle: 'الريش المكتسبة',
+    sessionsCompleted: 'جلسات مكتملة',
+    consecutiveDays: 'أيام متتالية',
+    startNewSession: 'بدء جلسة جديدة',
+    pieTasksCompleted: 'مهام مكتملة',
+    pieCheckins: 'تسجيل دخول',
+    pieReflections: 'تأمل',
     tasksCompleted: 'المهام المكتملة',
     daysActive: 'الأيام النشطة',
     

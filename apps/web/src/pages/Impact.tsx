@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 // import { db } from '../lib/database';
 import { FeatherService } from '../lib/featherService';
+import { LanguageService } from '../lib/language';
+import { useTranslations } from '../lib/translations';
 
 interface ChartData {
   date: string;
@@ -17,6 +19,8 @@ interface FeatherData {
 }
 
 export const Impact: React.FC = () => {
+  const currentLanguage = LanguageService.getCurrentLanguage();
+  const t = useTranslations(currentLanguage);
   const [chartData, setChartData] = useState<ChartData[]>([]);
   const [featherData, setFeatherData] = useState<FeatherData[]>([]);
   const [totalFeathers, setTotalFeathers] = useState(0);
@@ -35,9 +39,9 @@ export const Impact: React.FC = () => {
         const reflectionFeathers = await FeatherService.getFeathersByType('reflection');
 
         const realFeatherData: FeatherData[] = [
-          { type: 'مهام مكتملة', count: breathingFeathers.length, color: '#00A29D' },
-          { type: 'تسجيل دخول', count: checkinFeathers.length, color: '#FFCC66' },
-          { type: 'تأمل', count: reflectionFeathers.length, color: '#05585F' },
+          { type: t.pieTasksCompleted, count: breathingFeathers.length, color: '#00A29D' },
+          { type: t.pieCheckins, count: checkinFeathers.length, color: '#FFCC66' },
+          { type: t.pieReflections, count: reflectionFeathers.length, color: '#05585F' },
         ];
 
         // Mock chart data for demonstration
@@ -65,7 +69,7 @@ export const Impact: React.FC = () => {
     return (
       <div className="max-w-4xl mx-auto text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-        <p className="text-neutral-600">جاري تحميل البيانات...</p>
+        <p className="text-neutral-600">{currentLanguage === 'ar' ? 'جاري تحميل البيانات...' : 'Loading data...'}</p>
       </div>
     );
   }
@@ -77,12 +81,8 @@ export const Impact: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-8"
       >
-        <h1 className="text-3xl font-bold text-primary-900 mb-4">
-          تأثيرك
-        </h1>
-        <p className="text-neutral-600">
-          تتبع تقدمك في رحلة التعلم العاطفي
-        </p>
+        <h1 className="text-3xl font-bold text-primary-900 mb-4">{t.yourProgress}</h1>
+        <p className="text-neutral-600">{t.trackYourJourney}</p>
       </motion.div>
 
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
@@ -91,7 +91,7 @@ export const Impact: React.FC = () => {
           animate={{ opacity: 1, x: 0 }}
           className="card"
         >
-          <h2 className="text-xl font-semibold mb-4">اتجاه المزاج</h2>
+          <h2 className="text-xl font-semibold mb-4">{t.moodTrend}</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
@@ -116,7 +116,7 @@ export const Impact: React.FC = () => {
           animate={{ opacity: 1, x: 0 }}
           className="card"
         >
-          <h2 className="text-xl font-semibold mb-4">الريش المكتسبة</h2>
+          <h2 className="text-xl font-semibold mb-4">{t.feathersEarnedTitle}</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -148,15 +148,15 @@ export const Impact: React.FC = () => {
       >
         <div className="card text-center">
           <div className="text-3xl font-bold text-primary-500 mb-2">12</div>
-          <div className="text-neutral-600">جلسات مكتملة</div>
+          <div className="text-neutral-600">{t.sessionsCompleted}</div>
         </div>
         <div className="card text-center">
           <div className="text-3xl font-bold text-accent-500 mb-2">8</div>
-          <div className="text-neutral-600">أيام متتالية</div>
+          <div className="text-neutral-600">{t.consecutiveDays}</div>
         </div>
         <div className="card text-center">
           <div className="text-3xl font-bold text-primary-700 mb-2">{totalFeathers}</div>
-          <div className="text-neutral-600">ريشة مكتسبة</div>
+          <div className="text-neutral-600">{t.totalFeathers}</div>
         </div>
       </motion.div>
 
@@ -169,7 +169,7 @@ export const Impact: React.FC = () => {
           onClick={() => window.location.href = '/'}
           className="btn-primary"
         >
-          بدء جلسة جديدة
+          {t.startNewSession}
         </button>
       </motion.div>
     </div>
