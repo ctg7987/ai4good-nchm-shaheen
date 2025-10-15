@@ -173,8 +173,9 @@ export const CheckIn: React.FC = () => {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder={t.notesPlaceholder}
-                  className="w-full h-60 p-8 border-3 border-slate-200 rounded-2xl resize-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 text-2xl leading-relaxed placeholder-slate-400"
-                  style={{ direction: currentLanguage === 'ar' ? 'ltr' : 'rtl', textAlign: currentLanguage === 'ar' ? 'left' : 'right' }}
+                  className="w-full h-60 p-8 border-3 border-slate-200 rounded-2xl resize-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 text-2xl leading-relaxed placeholder-slate-400 text-left"
+                  dir={currentLanguage === 'ar' ? 'ltr' : 'rtl'}
+                  style={{ direction: currentLanguage === 'ar' ? 'ltr' : 'rtl', unicodeBidi: 'plaintext' as any }}
                 />
                 <div className="absolute bottom-8 left-8 text-xl text-slate-400">
                   {notes.length} {t.characters}
