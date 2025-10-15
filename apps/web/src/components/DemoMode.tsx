@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../lib/api';
 import { FeatherService } from '../lib/featherService';
 import { FeatherParticles } from './FeatherParticles';
+import { LanguageService } from '../lib/language';
 
 interface DemoModeProps {
   isVisible: boolean;
@@ -14,6 +15,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [particleTrigger, setParticleTrigger] = useState(0);
   const navigate = useNavigate();
+  const currentLanguage = LanguageService.getCurrentLanguage();
 
   const demoSteps = [
     { step: 1, title: "تسجيل الدخول", description: "أشعر بالتوتر قبل الامتحان" },
@@ -93,7 +95,9 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {isRunning ? 'جاري التشغيل...' : '🎭 وضع العرض'}
+          {isRunning 
+            ? (currentLanguage === 'ar' ? 'جاري التشغيل...' : 'Running...') 
+            : (currentLanguage === 'ar' ? '🎭 وضع العرض' : '🎭 Demo Mode')}
         </motion.button>
       </div>
 
