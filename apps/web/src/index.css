@@ -8,7 +8,6 @@
 @layer base {
   html {
     font-family: 'Inter', system-ui, sans-serif;
-    direction: ltr;
     scroll-behavior: smooth;
   }
   
@@ -17,7 +16,7 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: left;
+    text-align: inherit;
   }
 
   * {
