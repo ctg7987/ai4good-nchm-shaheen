@@ -11,13 +11,13 @@ export const LANGUAGES: Record<Language, LanguageConfig> = {
   en: {
     code: 'en',
     name: 'English',
-    direction: 'rtl',
+    direction: 'ltr',
     font: 'Inter, system-ui, sans-serif'
   },
   ar: {
     code: 'ar',
     name: 'العربية',
-    direction: 'ltr',
+    direction: 'rtl',
     font: 'Noto Sans Arabic, Tajawal, system-ui, sans-serif'
   }
 };
