@@ -17,13 +17,20 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
   const navigate = useNavigate();
   const currentLanguage = LanguageService.getCurrentLanguage();
 
-  const demoSteps = [
-    { step: 1, title: "تسجيل الدخول", description: "أشعر بالتوتر قبل الامتحان" },
-    { step: 2, title: "توليد السرد", description: "إنشاء استعارة علاجية" },
-    { step: 3, title: "عرض القصة", description: "عرض السرد العلاجي" },
-    { step: 4, title: "إكمال المهمة", description: "تمرين التنفس لمدة 90 ثانية" },
-    { step: 5, title: "كسب الريش", description: "حصول على ريشة جديدة" },
-    { step: 6, title: "عرض التأثير", description: "إحصائيات التقدم" }
+  const demoSteps = currentLanguage === 'ar' ? [
+    { step: 1, title: 'تسجيل الدخول', description: 'أشعر بالتوتر قبل الامتحان' },
+    { step: 2, title: 'توليد السرد', description: 'إنشاء استعارة علاجية' },
+    { step: 3, title: 'عرض القصة', description: 'عرض السرد العلاجي' },
+    { step: 4, title: 'إكمال المهمة', description: 'تمرين التنفس لمدة 90 ثانية' },
+    { step: 5, title: 'كسب الريش', description: 'حصول على ريشة جديدة' },
+    { step: 6, title: 'عرض التأثير', description: 'إحصائيات التقدم' }
+  ] : [
+    { step: 1, title: 'Check-in', description: 'I feel stressed before the exam' },
+    { step: 2, title: 'Generate Narrative', description: 'Create a supportive metaphor' },
+    { step: 3, title: 'Show Story', description: 'Display the narrative' },
+    { step: 4, title: 'Complete Task', description: 'Breathing exercise for 90s' },
+    { step: 5, title: 'Earn Feathers', description: 'Gain a new feather' },
+    { step: 6, title: 'View Impact', description: 'Progress statistics' }
   ];
 
   const runDemo = async () => {
@@ -125,7 +132,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
                 ×
               </button>
               <h3 className="text-xl font-bold text-center mb-4">
-                عرض توضيحي - رحلة المستخدم
+                {currentLanguage === 'ar' ? 'عرض توضيحي - رحلة المستخدم' : 'Demo – User Journey'}
               </h3>
               
               <div className="space-y-3">
@@ -164,7 +171,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
                   ></div>
                 </div>
                 <div className="text-sm text-gray-500 text-center">
-                  الخطوة {currentStep} من {demoSteps.length}
+                  {currentLanguage === 'ar' ? `الخطوة ${currentStep} من ${demoSteps.length}` : `Step ${currentStep} of ${demoSteps.length}`}
                 </div>
               </div>
             </motion.div>
