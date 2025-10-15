@@ -12,6 +12,8 @@ export interface Translations {
   clickEmotions: string;
   shareYourThoughts: string;
   writeAdditionalThoughts: string;
+  notesPlaceholder: string;
+  characters: string;
   startYourJourney: string;
   processing: string;
   
@@ -138,6 +140,8 @@ export const translations: Record<Language, Translations> = {
     completeEarly: 'Complete Early',
     taskCompleted: 'Task Completed!',
     completeJournal: 'Complete Journal',
+    notesPlaceholder: "Write here about your feelings or what you're going through... don't hesitate to share anything that comes to mind",
+    characters: 'characters',
     todaysTasks: 'Today\'s Tasks',
     chooseActivity: 'Choose an activity to improve your emotional health',
     breathingExerciseTitle: 'Breathing Exercise',
@@ -240,6 +244,8 @@ export const translations: Record<Language, Translations> = {
     completeEarly: 'أكمل مبكراً',
     taskCompleted: 'تمت المهمة!',
     completeJournal: 'أكمل اليوميات',
+    notesPlaceholder: 'اكتب هنا عن مشاعرك أو ما تمرّ به... لا تتردد في مشاركة أي شيء يخطر ببالك',
+    characters: 'حرفًا',
     todaysTasks: 'مهام اليوم',
     chooseActivity: 'اختر نشاطاً لتحسين صحتك العاطفية',
     breathingExerciseTitle: 'تمرين التنفس',
