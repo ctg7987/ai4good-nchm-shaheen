@@ -20,6 +20,9 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Install root dependencies (workspace bootstrap)
+        run: npm install
+
       - name: Install web dependencies (workspace)
         run: npm -w apps/web ci || npm -w apps/web install
 
