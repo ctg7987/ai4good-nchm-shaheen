@@ -107,7 +107,7 @@ export interface Translations {
 export const translations: Record<Language, Translations> = {
   en: {
     // Navigation
-    appName: 'NCMH Wellbeing - Welcome to Shaheen',
+    appName: 'Shaheen',
     redeem: 'Redeem',
     
     // Check-in page
@@ -187,7 +187,7 @@ export const translations: Record<Language, Translations> = {
     // Redemption modal
     redeemFeathers: 'Redeem Feathers',
     feathers: 'feathers',
-    donateNCMH: 'Donate NCMH Minutes',
+    donateNCMH: 'Donate Shaheen Minutes',
     donateNCMHDesc: 'Donate minutes of your time to help others',
     coffeeVoucher: 'Coffee Voucher',
     coffeeVoucherDesc: 'Free coffee voucher from a local cafe',
@@ -211,7 +211,7 @@ export const translations: Record<Language, Translations> = {
   
   ar: {
     // Navigation
-    appName: 'رفاهية NCMH - مرحباً بك في شاهين',
+    appName: 'شاهين',
     redeem: 'استبدال',
     
     // Check-in page
@@ -291,7 +291,7 @@ export const translations: Record<Language, Translations> = {
     // Redemption modal
     redeemFeathers: 'استبدال الريش',
     feathers: 'ريشة',
-    donateNCMH: 'تبرع لدقائق NCMH',
+    donateNCMH: 'تبرع لدقائق شاهين',
     donateNCMHDesc: 'تبرع بدقائق من وقتك لمساعدة الآخرين',
     coffeeVoucher: 'قسيمة قهوة',
     coffeeVoucherDesc: 'قسيمة لقهوة مجانية من مقهى محلي',

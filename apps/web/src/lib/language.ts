@@ -24,13 +24,17 @@ export const LANGUAGES: Record<Language, LanguageConfig> = {
 
 export class LanguageService {
   private static readonly STORAGE_KEY = 'ncmh-language';
-  private static currentLanguage: Language = 'en';
+  private static currentLanguage: Language = 'ar';
 
   static getCurrentLanguage(): Language {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(this.STORAGE_KEY) as Language;
       if (stored && LANGUAGES[stored]) {
         this.currentLanguage = stored;
+      } else {
+        // If no stored language, use Arabic as default and store it
+        this.currentLanguage = 'ar';
+        localStorage.setItem(this.STORAGE_KEY, 'ar');
       }
     }
     return this.currentLanguage;
@@ -62,6 +66,14 @@ export class LanguageService {
     if (typeof window !== 'undefined') {
       const language = this.getCurrentLanguage();
       this.setLanguage(language);
+    }
+  }
+
+  static resetToDefault(): void {
+    if (typeof window !== 'undefined') {
+      this.currentLanguage = 'ar';
+      localStorage.setItem(this.STORAGE_KEY, 'ar');
+      this.setLanguage('ar');
     }
   }
 }

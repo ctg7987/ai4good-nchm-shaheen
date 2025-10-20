@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     """Application settings."""
     
     # App Configuration
-    app_name: str = "NCMH Wellbeing API"
+    app_name: str = "Shaheen API"
     app_version: str = "1.0.0"
     debug: bool = False
     
@@ -32,6 +32,8 @@ class Settings(BaseSettings):
     # AI Configuration
     openai_api_key: str = ""
     replicate_api_token: str = ""
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_model: str = "llama2"
     
     # Telemetry
     allow_telemetry: bool = False

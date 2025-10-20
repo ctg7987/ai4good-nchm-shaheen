@@ -1,59 +1,67 @@
 import { Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
-import { NonClinicalBanner } from './components/NonClinicalBanner';
-import { FeatherCounter } from './components/FeatherCounter';
-import { DemoMode } from './components/DemoMode';
-import { LanguageToggle } from './components/LanguageToggle';
+import { useEffect, useState } from 'react';
+import { ConsentModal } from './components/ConsentModal';
 import { CheckIn } from './pages/CheckIn';
 import { Story } from './pages/Story';
-import { Task } from './pages/Task';
-import { Impact } from './pages/Impact';
-import { Privacy } from './pages/Privacy';
-import { Ethics } from './pages/Ethics';
+import { Comic } from './pages/Comic';
+import { Feed } from './pages/Feed';
+import { FeathersOfHope } from './pages/FeathersOfHope';
+import { Journal } from './pages/Journal';
+import { Breathing } from './pages/Breathing';
 import { LanguageService } from './lib/language';
-import { useTranslations } from './lib/translations';
 
 function App() {
+  const [showConsent, setShowConsent] = useState(true);
+
   useEffect(() => {
-    LanguageService.initialize();
+    // Force Arabic as default language on first load
+    const storedLanguage = localStorage.getItem('ncmh-language');
+    const storedConsent = localStorage.getItem('ncmh-consent');
+    
+    // Reset language to Arabic if it's currently English and no consent given
+    if (storedLanguage === 'en' && !storedConsent) {
+      LanguageService.resetToDefault();
+    } else {
+      LanguageService.initialize();
+    }
+    
+    // Check if user has already consented
+    if (storedConsent === 'true') {
+      setShowConsent(false);
+    } else {
+      setShowConsent(true);
+    }
   }, []);
 
-  const currentLanguage = LanguageService.getCurrentLanguage();
-  const t = useTranslations(currentLanguage);
+  const handleConsent = () => {
+    setShowConsent(false);
+  };
+
+  const handleDecline = () => {
+    setShowConsent(false);
+    // You can redirect to a decline page or show a message
+    alert('Thank you for your interest. You can visit us again anytime.');
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
-      <NonClinicalBanner />
-      <nav className="bg-white shadow-sm border-b" role="navigation" aria-label="Main Navigation">
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center space-x-4 space-x-reverse">
-            <a 
-              href="/" 
-              className="text-xl font-bold text-green-900 hover:text-green-700 transition-colors"
-              aria-label="Back to Home Page"
-            >
-              {t.appName}
-            </a>
-          </div>
-          <div className="flex items-center space-x-4 space-x-reverse">
-            <LanguageToggle />
-            <FeatherCounter />
-          </div>
-        </div>
-      </nav>
-      <main className="container mx-auto px-4 py-8">
-        <Routes>
-          <Route path="/" element={<CheckIn />} />
-          <Route path="/story" element={<Story />} />
-          <Route path="/task" element={<Task />} />
-          <Route path="/impact" element={<Impact />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/ethics" element={<Ethics />} />
-        </Routes>
-      </main>
-      
-      {/* Demo Mode - Only visible in development */}
-      <DemoMode isVisible={(import.meta as any).env?.DEV || false} />
+    <div className="min-h-screen bg-gradient-to-br from-stone-200 to-stone-300">
+      {/* Consent Modal */}
+      <ConsentModal
+        isOpen={showConsent}
+        onConsent={handleConsent}
+        onDecline={handleDecline}
+      />
+
+      {/* Main Content */}
+      <Routes>
+        <Route path="/" element={<CheckIn />} />
+        <Route path="/story" element={<Story />} />
+        <Route path="/comic" element={<Comic />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/feathers" element={<FeathersOfHope />} />
+        <Route path="/journal" element={<Journal />} />
+        <Route path="/breathing" element={<Breathing />} />
+      </Routes>
     </div>
   );
 }

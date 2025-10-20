@@ -1,230 +1,113 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { PLUTCHIK_EMOTIONS, MoodSelection } from '../types/plutchik';
-import { db } from '../lib/database';
-import { apiClient } from '../lib/api';
-import { FeatherService } from '../lib/featherService';
-import { FeatherParticles } from '../components/FeatherParticles';
+import { Mic, ChevronRight } from 'lucide-react';
+import { ArTSTVoiceInput } from '../components/ArTSTVoiceInput';
 import { LanguageService } from '../lib/language';
-import { useTranslations } from '../lib/translations';
+import { PhoneFrame } from '../components/PhoneFrame';
 
 export const CheckIn: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedMood, setSelectedMood] = useState<MoodSelection | null>(null);
-  const [notes, setNotes] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [particleTrigger, setParticleTrigger] = useState(0);
+  const [textInput, setTextInput] = useState('');
+  const [hasInput, setHasInput] = useState(false);
   
   const currentLanguage = LanguageService.getCurrentLanguage();
-  const t = useTranslations(currentLanguage);
 
-  const handleMoodSelect = (emotion: typeof PLUTCHIK_EMOTIONS[0], intensity: number) => {
-    setSelectedMood({ emotion, intensity });
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextInput(e.target.value);
+    setHasInput(e.target.value.trim().length > 0);
   };
 
-  const handleSubmit = async () => {
-    if (!selectedMood) return;
-    
-    setIsSubmitting(true);
-    try {
-      // Save session to local database
-      const sessionId = await db.sessions.add({
-        timestamp: new Date(),
-        mood: selectedMood.emotion.nameAr,
-        notes: notes.trim() || undefined
-      });
-      
-      // Award feathers for daily check-in
-      await FeatherService.awardDailyCheckin();
-      setParticleTrigger(prev => prev + 1);
-      
-      // Generate narrative from API
-      const narrativeResponse = await apiClient.postNarrative({
-        text_ar: notes.trim() || selectedMood.emotion.nameAr,
-        mood: selectedMood.emotion.id
-      });
-      
-      // Reset form
-      setSelectedMood(null);
-      setNotes('');
-      
-      // Navigate to story with narrative data
+  const handleVoiceTranscript = (transcript: string) => {
+    setTextInput(transcript);
+    setHasInput(transcript.trim().length > 0);
+  };
+
+  const handleContinue = () => {
+    if (hasInput) {
       navigate('/story', { 
         state: { 
-          narrative: narrativeResponse,
-          sessionId 
+          userInput: textInput.trim()
         } 
       });
-    } catch (error) {
-      console.error('Failed to save session or generate narrative:', error);
-      // Still navigate even if API fails
-      navigate('/story', { state: { sessionId: Date.now() } });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4" style={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-      <FeatherParticles trigger={particleTrigger} />
-      
-      <div className="w-full max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mb-8 shadow-2xl">
-            <span className="text-6xl">💭</span>
-          </div>
-          <h1 className="text-7xl sm:text-8xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-8" style={{fontSize: '6rem', fontWeight: 'bold', textAlign: 'center'}}>
-            {t.howAreYouFeeling}
-          </h1>
-          <p className="text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed" style={{fontSize: '1.5rem', textAlign: 'center', lineHeight: '1.6'}}>
-            {t.takeAMoment}
-          </p>
-        </motion.div>
-
-        {/* Mood Selection */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-12 mb-12"
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-slate-800 mb-6" style={{fontSize: '2.5rem', textAlign: 'center'}}>{t.chooseYourFeelings}</h2>
-            <p className="text-2xl text-slate-600" style={{fontSize: '1.5rem', textAlign: 'center'}}>{t.clickEmotions}</p>
+    <PhoneFrame>
+      <div className="flex flex-col items-center justify-center min-h-full bg-amber-50 p-6">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center space-y-4">
+            {/* Welcome Message */}
+            <div className="mb-6">
+                     <h3 className="text-4xl font-bold text-green-800 mb-2 tracking-wide" style={{fontFamily: 'Georgia, "Times New Roman", serif', fontStyle: 'italic', letterSpacing: '0.05em'}}>
+                       مرحباً بك في شاهين / Welcome to Shaheen
+                     </h3>
+            </div>
+            
+            {/* Shaheen Falcon Icon */}
+            <div className="relative inline-block">
+              <svg className="w-16 h-16 mx-auto" viewBox="0 0 100 100">
+                {/* Falcon head with characteristic markings */}
+                <ellipse cx="50" cy="25" rx="12" ry="10" fill="#2d5016" stroke="#1a3d0f" strokeWidth="1"/>
+                
+                {/* Falcon eye */}
+                <circle cx="47" cy="22" r="2" fill="#FFD700" stroke="#FFD700" strokeWidth="0.5"/>
+                
+                {/* Falcon beak - sharp and curved */}
+                <path d="M50,15 Q45,12 40,18 Q42,20 50,18" fill="#DAA520" stroke="#B8860B" strokeWidth="0.5"/>
+                
+                {/* Falcon body - streamlined */}
+                <ellipse cx="50" cy="45" rx="15" ry="20" fill="#2d5016" stroke="#1a3d0f" strokeWidth="1"/>
+                
+                {/* Left wing - spread */}
+                <path d="M35,40 Q20,35 15,50 Q20,60 35,55 Q40,50 35,40" fill="#1a3d0f" stroke="#0f2a0a" strokeWidth="0.5"/>
+                
+                {/* Right wing - spread */}
+                <path d="M65,40 Q80,35 85,50 Q80,60 65,55 Q60,50 65,40" fill="#1a3d0f" stroke="#0f2a0a" strokeWidth="0.5"/>
+                
+                {/* Falcon tail - fanned */}
+                <path d="M50,65 Q40,80 30,85 Q35,82 50,75 Q65,82 70,85 Q60,80 50,65" fill="#1a3d0f" stroke="#0f2a0a" strokeWidth="0.5"/>
+                
+                {/* Falcon talons */}
+                <path d="M45,75 Q42,78 40,80 Q43,79 45,77" fill="#DAA520" stroke="#B8860B" strokeWidth="0.5"/>
+                <path d="M55,75 Q58,78 60,80 Q57,79 55,77" fill="#DAA520" stroke="#B8860B" strokeWidth="0.5"/>
+              </svg>
+            </div>
+            
+                   <h1 className="text-4xl font-light text-gray-800" style={{fontFamily: 'serif'}}>
+                     كيف تشعر؟ / How are you feeling?
+                   </h1>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
-            {PLUTCHIK_EMOTIONS.map((emotion, index) => (
+          <div className="space-y-4">
+            <textarea
+              value={textInput}
+              onChange={handleTextChange}
+              placeholder="اكتب هنا... / Type here..."
+              className="w-full h-32 p-4 rounded-2xl border-2 border-gray-300 focus:border-green-800 focus:outline-none resize-none bg-white text-gray-800"
+              style={{fontFamily: 'system-ui'}}
+            />
+            
+            <button className="w-full flex items-center justify-center p-4 rounded-full bg-white border-2 border-green-800 hover:bg-green-50 transition-colors">
+              <Mic className="w-6 h-6 text-green-800" />
+              <span className="mr-3 text-green-800">استخدم الصوت / Use Voice</span>
+            </button>
+
+            {hasInput && (
               <motion.button
-                key={emotion.id}
-                initial={{ opacity: 0, y: 20 }}
+                onClick={handleContinue}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ 
-                  scale: 1.1,
-                  y: -10,
-                  transition: { duration: 0.2 }
-                }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleMoodSelect(emotion, 1)}
-                className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 ${
-                  selectedMood?.emotion.id === emotion.id
-                    ? 'border-green-500 bg-gradient-to-br from-green-50 to-emerald-50 shadow-xl scale-105'
-                    : 'border-slate-200 bg-white hover:border-green-300 hover:shadow-lg hover:bg-green-50/50'
-                }`}
-                style={{ 
-                  padding: '1.5rem', 
-                  minHeight: '180px', 
-                  fontSize: '1.2rem', 
-                  textAlign: 'center',
-                  backgroundColor: selectedMood?.emotion.id === emotion.id ? undefined : emotion.color + '20'
-                }}
-                aria-label={`Choose ${emotion.nameAr}`}
-                role="button"
+                className="w-full flex items-center justify-center p-4 rounded-full bg-green-800 hover:bg-green-900 text-white transition-colors"
               >
-                <AnimatePresence>
-                  {selectedMood?.emotion.id === emotion.id && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                      className="absolute -top-3 -right-3 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center"
-                    >
-                      <span className="text-white text-lg">✓</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200" style={{fontSize: '2.5rem'}}>
-                  {emotion.emoji}
-                </div>
-                <div className="text-lg font-bold text-slate-700 group-hover:text-green-700 transition-colors" style={{fontSize: '1.1rem', fontWeight: 'bold'}}>
-                  {currentLanguage === 'ar' ? emotion.nameAr : emotion.name}
-                </div>
+                <span className="ml-2">التالي / Next</span>
+                <ChevronRight className="w-5 h-5" />
               </motion.button>
-            ))}
+            )}
           </div>
-        </motion.div>
-
-        {/* Notes Section */}
-        <AnimatePresence>
-          {selectedMood && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-12 mb-12"
-            >
-              <div className="text-center mb-10">
-                <h3 className="text-4xl font-bold text-slate-800 mb-6">{t.shareYourThoughts}</h3>
-                <p className="text-2xl text-slate-600">{t.writeAdditionalThoughts}</p>
-              </div>
-              
-              <div className="relative">
-                <textarea
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder={t.writeAdditionalThoughts}
-                  className={`w-full h-60 p-8 border-3 border-slate-200 rounded-2xl resize-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all duration-300 text-2xl leading-relaxed placeholder-slate-400 ${currentLanguage === 'ar' ? 'text-right' : 'text-left'}`}
-                  dir={currentLanguage === 'ar' ? 'rtl' : 'ltr'}
-                />
-                <div className="absolute bottom-8 left-8 text-xl text-slate-400">
-                  {notes.length} {t.characters}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Submit Button */}
-        <AnimatePresence>
-          {selectedMood && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.5 }}
-              className="text-center"
-            >
-              <motion.button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                whileHover={!isSubmitting ? { 
-                  scale: 1.1,
-                  y: -5,
-                  transition: { duration: 0.2 }
-                } : {}}
-                whileTap={!isSubmitting ? { scale: 0.95 } : {}}
-                className={`relative px-16 py-6 rounded-2xl font-bold text-2xl transition-all duration-300 ${
-                  !isSubmitting
-                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-2xl hover:shadow-3xl hover:from-green-700 hover:to-emerald-700'
-                    : 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                }`}
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center space-x-4">
-                    <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>{t.processing}</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center space-x-4">
-                    <span>{t.startYourJourney}</span>
-                    <span className="text-4xl">✨</span>
-                  </div>
-                )}
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </PhoneFrame>
   );
 };

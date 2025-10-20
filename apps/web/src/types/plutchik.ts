@@ -17,14 +17,6 @@ export const PLUTCHIK_EMOTIONS: PlutchikEmotion[] = [
     emoji: '😊'
   },
   {
-    id: 'trust',
-    name: 'Trust',
-    nameAr: 'ثقة',
-    color: '#00A29D',
-    intensity: 1,
-    emoji: '🤝'
-  },
-  {
     id: 'fear',
     name: 'Fear',
     nameAr: 'خوف',
@@ -71,6 +63,14 @@ export const PLUTCHIK_EMOTIONS: PlutchikEmotion[] = [
     color: '#F59E0B',
     intensity: 1,
     emoji: '😌'
+  },
+  {
+    id: 'other',
+    name: 'Other',
+    nameAr: 'أخرى',
+    color: '#9CA3AF',
+    intensity: 1,
+    emoji: '💭'
   }
 ];
 

@@ -1,7 +1,7 @@
 {
-  "name": "ncmh-wellbeing-app",
+  "name": "shaheen-app",
   "version": "1.0.0",
-  "description": "Open-source, non-clinical Arabic wellbeing app for NCMH",
+  "description": "Shaheen - Arabic emotional learning and wellbeing companion",
   "private": true,
   "workspaces": [
     "apps/*",

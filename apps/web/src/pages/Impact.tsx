@@ -117,7 +117,7 @@ export const Impact: React.FC = () => {
           className="card"
         >
           <h2 className="text-xl font-semibold mb-4">{t.feathersEarnedTitle}</h2>
-          <div className="h-64">
+          <div className="h-64 flex items-center justify-center">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -125,8 +125,8 @@ export const Impact: React.FC = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ type, count }) => `${type}: ${count}`}
-                  outerRadius={80}
+                  label={false}
+                  outerRadius={60}
                   fill="#8884d8"
                   dataKey="count"
                 >
@@ -137,6 +137,21 @@ export const Impact: React.FC = () => {
                 <Tooltip />
               </PieChart>
             </ResponsiveContainer>
+          </div>
+          {/* Legend with clear labels */}
+          <div className="mt-4 space-y-2">
+            {featherData.map((entry, index) => (
+              <div key={index} className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div 
+                    className="w-4 h-4 rounded-full mr-3" 
+                    style={{ backgroundColor: entry.color }}
+                  ></div>
+                  <span className="text-gray-700 font-medium">{entry.type}</span>
+                </div>
+                <span className="text-gray-900 font-bold text-lg">{entry.count}</span>
+              </div>
+            ))}
           </div>
         </motion.div>
       </div>

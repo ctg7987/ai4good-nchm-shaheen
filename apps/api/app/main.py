@@ -4,13 +4,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.settings import settings
-from app.routers import health, narrative, metrics, art, policy
+from app.routers import health, narrative, metrics, art, policy, ollama, arabic_nlp
 
 # Create FastAPI application
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
-    description="Non-clinical Arabic wellbeing app API",
+    description="Shaheen - Arabic emotional learning and wellbeing companion API",
     docs_url="/docs",
     redoc_url="/redoc"
 )
@@ -30,13 +30,16 @@ app.include_router(narrative.router, prefix="/api/v1", tags=["narrative"])
 app.include_router(metrics.router, prefix="/api/v1", tags=["metrics"])
 app.include_router(art.router, prefix="/api/v1", tags=["art"])
 app.include_router(policy.router, prefix="/api/v1", tags=["policy"])
+app.include_router(ollama.router, prefix="/api/v1/ollama", tags=["ollama"])
+app.include_router(arabic_nlp.router, prefix="/api/v1/arabic-nlp", tags=["arabic-nlp"])
+# app.include_router(artst.router, prefix="/api/v1/artst", tags=["artst"])  # Temporarily disabled until dependencies installed
 
 
 @app.get("/")
 async def root():
     """Root endpoint."""
     return {
-        "message": "NCMH Wellbeing API",
+        "message": "Shaheen API",
         "version": settings.app_version,
         "status": "running",
         "disclaimer": "غير سريري — أداة للتعلم العاطفي فقط"

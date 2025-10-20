@@ -94,7 +94,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
 
   return (
     <>
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-4 left-4 z-50 flex flex-col space-y-2">
         <motion.button
           onClick={runDemo}
           disabled={isRunning}
@@ -105,6 +105,18 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
           {isRunning 
             ? (currentLanguage === 'ar' ? 'جاري التشغيل...' : 'Running...') 
             : (currentLanguage === 'ar' ? '🎭 وضع العرض' : '🎭 Demo Mode')}
+        </motion.button>
+        
+        <motion.button
+          onClick={() => {
+            LanguageService.resetToDefault();
+            window.location.reload();
+          }}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-lg font-medium text-sm"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {currentLanguage === 'ar' ? '🔄 إعادة تعيين اللغة' : '🔄 Reset to Arabic'}
         </motion.button>
       </div>
 
@@ -132,7 +144,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
                 ×
               </button>
               <h3 className="text-xl font-bold text-center mb-4">
-                {currentLanguage === 'ar' ? 'عرض توضيحي - رحلة المستخدم' : 'Demo – User Journey'}
+                {currentLanguage === 'ar' ? 'عرض توضيحي - رحلة شاهين' : 'Demo – Shaheen Journey'}
               </h3>
               
               <div className="space-y-3">
@@ -150,7 +162,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
                   >
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
                       currentStep >= step.step 
-                        ? 'bg-green-500 text-white' 
+                        ? 'bg-green-600 text-white' 
                         : 'bg-gray-300 text-gray-600'
                     }`}>
                       {currentStep > step.step ? '✓' : step.step}
@@ -166,7 +178,7 @@ export const DemoMode: React.FC<DemoModeProps> = ({ isVisible }) => {
               <div className="mt-4">
                 <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                   <div 
-                    className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                    className="bg-green-600 h-2 rounded-full transition-all duration-500"
                     style={{ width: `${(currentStep / demoSteps.length) * 100}%` }}
                   ></div>
                 </div>

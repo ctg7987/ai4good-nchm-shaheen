@@ -1,6 +1,6 @@
-# NCMH Wellbeing App - Arabic Emotional Learning Platform
+# Shaheen - Arabic Emotional Learning Companion
 
-A privacy-first, non-clinical Arabic wellbeing application for emotional learning and self-reflection.
+A privacy-first, non-clinical Arabic emotional learning application that helps users explore their feelings through therapeutic narratives, breathing exercises, and journaling.
 
 ## 🎯 Overview
 
@@ -102,7 +102,7 @@ QDRANT_URL=http://localhost:6333
 QDRANT_API_KEY=
 
 # App Configuration
-APP_NAME=NCMH Wellbeing App
+APP_NAME=Shaheen
 APP_VERSION=1.0.0
 DEBUG=false
 ```
