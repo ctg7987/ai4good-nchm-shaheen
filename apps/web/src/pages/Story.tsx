@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { LanguageService } from '../lib/language';
 import { PhoneFrame } from '../components/PhoneFrame';
 
 interface Character {
@@ -12,47 +10,12 @@ interface Character {
   image: string;
 }
 
-const CHARACTERS: Character[] = [
-  {
-    id: 'falcon',
-    name: 'Falcon',
-    nameAr: 'صقر',
-    image: '/falcon.png'
-  },
-  {
-    id: 'omar',
-    name: 'Omar',
-    nameAr: 'عمر',
-    image: '/omar.png'
-  },
-  {
-    id: 'layla',
-    name: 'Layla',
-    nameAr: 'ليلى',
-    image: '/layla.png'
-  },
-  {
-    id: 'fahad',
-    name: 'Fahad',
-    nameAr: 'فهد',
-    image: '/fahad.png'
-  },
-  {
-    id: 'noor',
-    name: 'Noor',
-    nameAr: 'نور',
-    image: '/noor.png'
-  }
-];
-
 export const Story: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [storyText, setStoryText] = useState(location.state?.userInput || '');
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [hasConsent, setHasConsent] = useState(false);
-  
-  const currentLanguage = LanguageService.getCurrentLanguage();
 
   const handleStoryChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setStoryText(e.target.value);
@@ -108,7 +71,7 @@ export const Story: React.FC = () => {
               onChange={handleStoryChange}
                      placeholder="اكتب قصتك هنا... / Write your story here..."
               className="w-full p-3 rounded-xl border border-gray-300 focus:border-green-800 focus:outline-none resize-none"
-              rows="6"
+              rows={6}
             />
           </div>
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Heart, Feather } from 'lucide-react';
-import { LanguageService } from '../lib/language';
 import { PhoneFrame } from '../components/PhoneFrame';
 
 interface FeedPost {
@@ -138,7 +137,6 @@ export const Feed: React.FC = () => {
   const [posts, setPosts] = useState<FeedPost[]>(MOCK_POSTS);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [newComment, setNewComment] = useState<string>('');
-  const currentLanguage = LanguageService.getCurrentLanguage();
 
   // Add new post if coming from comic generation
   React.useEffect(() => {
@@ -228,24 +226,6 @@ export const Feed: React.FC = () => {
     ));
   };
 
-  const handleFeatherClick = (postId: string) => {
-    setPosts(prev => prev.map(post => 
-      post.id === postId 
-        ? { ...post, featherCount: post.featherCount + 1 }
-        : post
-    ));
-  };
-
-  const formatTimeAgo = (date: Date) => {
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
-    if (diffInHours < 1) return currentLanguage === 'ar' ? 'منذ دقائق' : 'minutes ago';
-    if (diffInHours < 24) return currentLanguage === 'ar' ? `منذ ${diffInHours} ساعة` : `${diffInHours}h ago`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    return currentLanguage === 'ar' ? `منذ ${diffInDays} يوم` : `${diffInDays}d ago`;
-  };
-
   return (
     <PhoneFrame>
       <div className="h-full bg-amber-50 flex flex-col">
@@ -327,7 +307,7 @@ export const Feed: React.FC = () => {
                           onChange={(e) => setNewComment(e.target.value)}
                                  placeholder="أضف تعليقاً... / Add a comment..."
                           className="w-full p-2 border border-gray-200 rounded-lg focus:border-green-800 focus:outline-none resize-none"
-                          rows="2"
+                          rows={2}
                         />
                         <div className="flex justify-end mt-2">
                           <button

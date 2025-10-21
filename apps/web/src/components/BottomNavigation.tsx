@@ -1,8 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BookOpen, Feather, Plus, BookMarked, Wind } from 'lucide-react';
-import { LanguageService } from '../lib/language';
 
 interface NavItem {
   id: string;
@@ -53,7 +51,6 @@ const NAV_ITEMS: NavItem[] = [
 export const BottomNavigation: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentLanguage = LanguageService.getCurrentLanguage();
 
   const handleNavigation = (path: string) => {
     navigate(path);

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { apiClient, OllamaRequest, OllamaResponse } from '../lib/api';
-import { VoiceInput } from './VoiceInput';
 import { ArTSTVoiceInput } from './ArTSTVoiceInput';
 import { LanguageService } from '../lib/language';
 

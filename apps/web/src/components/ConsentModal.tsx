@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LanguageService } from '../lib/language';
-import { useTranslations } from '../lib/translations';
 
 interface ConsentModalProps {
   isOpen: boolean;
@@ -15,7 +14,6 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({
   onDecline 
 }) => {
   const currentLanguage = LanguageService.getCurrentLanguage();
-  const t = useTranslations(currentLanguage);
   const [hasConsented, setHasConsented] = useState(false);
 
   // Check if user has already consented

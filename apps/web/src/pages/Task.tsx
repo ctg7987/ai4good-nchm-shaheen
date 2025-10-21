@@ -56,7 +56,7 @@ export const Task: React.FC = () => {
   };
 
   useEffect(() => {
-    let interval: number;
+    let interval: NodeJS.Timeout | undefined;
     
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {

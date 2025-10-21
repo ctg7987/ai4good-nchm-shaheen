@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LanguageService } from '../lib/language';
 import { PhoneFrame } from '../components/PhoneFrame';
 
 export const Comic: React.FC = () => {
@@ -9,7 +7,6 @@ export const Comic: React.FC = () => {
   const location = useLocation();
   const [thoughts, setThoughts] = useState('');
   
-  const currentLanguage = LanguageService.getCurrentLanguage();
   const { storyText, character } = location.state || {};
 
   const handleThoughtsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -44,7 +41,7 @@ export const Comic: React.FC = () => {
 
           <div className="bg-white rounded-2xl border-2 border-gray-300 p-6">
             <div className="grid grid-cols-2 gap-4">
-              {[1, 2, 3, 4].map((panel, idx) => (
+              {[1, 2, 3, 4].map((panel) => (
                 <div key={panel} className="aspect-square bg-amber-100 rounded-xl border-2 border-gray-400 overflow-hidden">
                   <img 
                     src={`/panel${panel}.png`} 
@@ -62,7 +59,7 @@ export const Comic: React.FC = () => {
               onChange={handleThoughtsChange}
               placeholder="أضف أفكارك... / Add your thoughts..."
               className="w-full p-3 rounded-xl border border-gray-300 focus:border-green-800 focus:outline-none resize-none"
-              rows="3"
+              rows={3}
             />
           </div>
 
