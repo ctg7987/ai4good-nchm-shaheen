@@ -121,10 +121,10 @@ DEBUG=false
 For judges and evaluators, a demo mode is available in development:
 
 1. **Start the application** in development mode
-2. **Click " وضع العرض"** button (top-left)
+2. **Click "وضع العرض"** button (top-left)
 3. **Watch the automated journey**:
    - Arabic mood input: "أشعر بالتوتر قبل الامتحان"
-   - Emotion classification → Therapeutic narrative
+   - Emotion classification to Therapeutic narrative
    - Story display with Arabic metaphors
    - Task completion (breathing exercise)
    - Feather earning with particle animation
