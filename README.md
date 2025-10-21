@@ -249,7 +249,7 @@ docker-compose up -d
 - **Accessibility**: ARIA labels and roles
 - **Mobile-First**: Responsive design
 
-## 📄 License
+## License
 
 MIT License - See [LICENSE](LICENSE) file for details.
 
