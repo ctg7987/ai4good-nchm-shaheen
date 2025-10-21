@@ -2,17 +2,17 @@
 
 A privacy-first, non-clinical Arabic emotional learning application that helps users explore their feelings through therapeutic narratives, breathing exercises, and journaling.
 
-## 🎯 Overview
+## Overview
 
 This application provides a safe, culturally-sensitive platform for Arabic speakers to explore their emotions through therapeutic narratives, breathing exercises, and journaling. Built with privacy-by-design principles and offline-first architecture.
 
-## ⚠️ Non-Clinical Disclaimer
+## Non-Clinical Disclaimer
 
 **غير سريري — أداة للتعلم العاطفي فقط**
 
 This application is NOT a clinical tool and does NOT provide medical diagnosis or treatment. It is designed for emotional learning and self-reflection only. For professional mental health support, please consult a qualified healthcare provider.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 20+
@@ -51,7 +51,7 @@ make dev-api
 make test
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 ### Monorepo Structure
 ```
@@ -82,7 +82,7 @@ graph TD
     K --> L[Full Functionality]
 ```
 
-## 🔧 Environment Configuration
+## Environment Configuration
 
 ### Required Environment Variables
 
@@ -116,12 +116,12 @@ DEBUG=false
 | `REPLICATE_API_TOKEN` | - | Enable AI art generation |
 | `OPENAI_API_KEY` | - | Enable advanced AI features |
 
-## 🎭 Demo Mode
+## Demo Mode
 
 For judges and evaluators, a demo mode is available in development:
 
 1. **Start the application** in development mode
-2. **Click "🎭 وضع العرض"** button (top-left)
+2. **Click " وضع العرض"** button (top-left)
 3. **Watch the automated journey**:
    - Arabic mood input: "أشعر بالتوتر قبل الامتحان"
    - Emotion classification → Therapeutic narrative
@@ -130,16 +130,7 @@ For judges and evaluators, a demo mode is available in development:
    - Feather earning with particle animation
    - Impact dashboard with statistics
 
-### 60-Second Judge Script
-
-1. **0-10s**: App loads with Arabic RTL interface, non-clinical banner visible
-2. **10-20s**: Demo mode starts, pre-fills Arabic text "أشعر بالتوتر قبل الامتحان"
-3. **20-30s**: API generates therapeutic narrative with Arabic metaphors
-4. **30-40s**: Story page displays with cultural sensitivity
-5. **40-50s**: Task completion shows feather earning with animations
-6. **50-60s**: Impact dashboard shows privacy-respecting statistics
-
-## 🔒 Privacy & Security
+## Privacy & Security
 
 ### Data Handling
 - **Local-First**: All user data stored in browser (IndexedDB)
@@ -153,7 +144,7 @@ For judges and evaluators, a demo mode is available in development:
 - **Local Processing**: Emotion classification happens client-side
 - **Secure Storage**: Encrypted local database
 
-## 🌐 Internationalization
+## Internationalization
 
 ### Arabic Support
 - **RTL Layout**: Right-to-left text direction
@@ -166,7 +157,7 @@ For judges and evaluators, a demo mode is available in development:
 - **Fallback Support**: English for international judges
 - **Accessibility**: Screen reader compatible
 
-## 🧪 Testing
+## Testing
 
 ### Test Coverage
 ```bash
@@ -186,7 +177,7 @@ make test
 - **Accessibility**: Screen reader and keyboard navigation
 - **Privacy**: Verify no data leaks to external services
 
-## 🚀 Deployment
+## Deployment
 
 ### Production Build
 ```bash
@@ -205,7 +196,7 @@ docker-compose up -d
 - **Staging**: Production-like with test data
 - **Production**: Optimized, telemetry enabled
 
-## 📊 Metrics & Analytics
+## Metrics & Analytics
 
 ### Anonymous Metrics (Opt-in)
 - Session starts
@@ -218,7 +209,7 @@ docker-compose up -d
 - **Aggregated Data**: No personal information
 - **Judge Access**: Download usage statistics
 
-## 🔧 Development
+## Development
 
 ### Code Quality
 - **ESLint**: JavaScript/TypeScript linting
@@ -231,7 +222,7 @@ docker-compose up -d
 - **Pull Requests**: Code review required
 - **CI/CD**: Automated testing and deployment
 
-## 📚 API Documentation
+## API Documentation
 
 ### Core Endpoints
 - `POST /api/v1/narrative` - Generate therapeutic narratives
@@ -244,7 +235,7 @@ docker-compose up -d
 - **Rate Limiting**: Prevents abuse
 - **CORS**: Configured for web app
 
-## 🤝 Contributing
+## Contributing
 
 ### Development Setup
 1. Fork the repository
@@ -262,7 +253,7 @@ docker-compose up -d
 
 MIT License - See [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## Support
 
 ### Technical Issues
 - **GitHub Issues**: Bug reports and feature requests
