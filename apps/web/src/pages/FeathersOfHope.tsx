@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { LanguageService } from '../lib/language';
 import { PhoneFrame } from '../components/PhoneFrame';
+import { ContentModerationBadge } from '../components/ContentModeration';
 
 interface FeatherPost {
   id: string;
@@ -170,6 +171,10 @@ export const FeathersOfHope: React.FC = () => {
 
                 {/* Content */}
                 <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-stone-500">{formatTimeAgo(feather.timestamp)}</span>
+                    <ContentModerationBadge safetyScore={98} isApproved={true} />
+                  </div>
                   <p className="text-stone-700 text-sm mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', lineHeight: '1.6' }}>
                     {feather.text}
                   </p>

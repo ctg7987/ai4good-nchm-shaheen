@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Heart, Feather } from 'lucide-react';
 import { PhoneFrame } from '../components/PhoneFrame';
+import { ContentModerationBadge } from '../components/ContentModeration';
 
 interface FeedPost {
   id: string;
@@ -242,7 +243,10 @@ export const Feed: React.FC = () => {
             {posts.map((post) => (
               <div key={post.id} className="bg-white rounded-2xl border-2 border-gray-300 overflow-hidden">
                 <div className="p-4">
-                  <p className="text-sm font-medium text-gray-700 mb-3">{post.isAnonymous ? 'Anonymous' : post.username}</p>
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-medium text-gray-700">{post.isAnonymous ? 'Anonymous' : post.username}</p>
+                    <ContentModerationBadge safetyScore={95} isApproved={true} />
+                  </div>
                   <div className="aspect-square bg-amber-100 rounded-xl mb-4 flex items-center justify-center border-2 border-gray-300 overflow-hidden">
                     <img 
                       src={`/${post.character.id}.png`} 

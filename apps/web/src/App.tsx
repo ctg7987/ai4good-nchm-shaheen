@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ConsentModal } from './components/ConsentModal';
+import { PremiumModal } from './components/PremiumModal';
+import { UsageTracker } from './lib/usageTracker';
 import { CheckIn } from './pages/CheckIn';
 import { Story } from './pages/Story';
 import { Comic } from './pages/Comic';
@@ -10,8 +12,12 @@ import { Journal } from './pages/Journal';
 import { Breathing } from './pages/Breathing';
 import { LanguageService } from './lib/language';
 
+// Global premium modal state
+export let openPremiumModal: () => void = () => {};
+
 function App() {
   const [showConsent, setShowConsent] = useState(true);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   useEffect(() => {
     // Force Arabic as default language on first load
@@ -31,6 +37,9 @@ function App() {
     } else {
       setShowConsent(true);
     }
+
+    // Expose premium modal function globally
+    openPremiumModal = () => setShowPremiumModal(true);
   }, []);
 
   const handleConsent = () => {
@@ -43,6 +52,15 @@ function App() {
     alert('Thank you for your interest. You can visit us again anytime.');
   };
 
+  const handlePremiumUpgrade = (plan: string) => {
+    console.log(`User selected ${plan} plan`);
+    // In production, this would redirect to payment gateway
+    // For demo, activate a free trial
+    UsageTracker.startFreeTrial();
+    alert(`🎉 Welcome to Premium! Your 7-day free trial has started.`);
+    setShowPremiumModal(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-200 to-stone-300">
       {/* Consent Modal */}
@@ -50,6 +68,13 @@ function App() {
         isOpen={showConsent}
         onConsent={handleConsent}
         onDecline={handleDecline}
+      />
+
+      {/* Premium Modal */}
+      <PremiumModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+        onUpgrade={handlePremiumUpgrade}
       />
 
       {/* Main Content */}

@@ -3,19 +3,26 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Mic, ChevronRight } from 'lucide-react';
 import { PhoneFrame } from '../components/PhoneFrame';
+import { AIProcessingIndicator, AIBadge } from '../components/AIProcessingIndicator';
 
 export const CheckIn: React.FC = () => {
   const navigate = useNavigate();
   const [textInput, setTextInput] = useState('');
   const [hasInput, setHasInput] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextInput(e.target.value);
     setHasInput(e.target.value.trim().length > 0);
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (hasInput) {
+      setIsAnalyzing(true);
+      // Simulate AI emotion analysis
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setIsAnalyzing(false);
+      
       navigate('/story', { 
         state: { 
           userInput: textInput.trim()
@@ -73,9 +80,10 @@ export const CheckIn: React.FC = () => {
             <button className="w-full flex items-center justify-center gap-2 p-3.5 rounded-full bg-white/90 border-2 border-white/40 hover:bg-white transition-colors shadow-md">
               <Mic className="w-5 h-5 text-[#4a6741]" />
               <span className="text-sm text-[#4a6741]">استخدم الصوت / Use Voice</span>
+              <span className="text-xs text-purple-600 font-semibold">🎤 ArTST</span>
             </button>
 
-            {hasInput && (
+            {hasInput && !isAnalyzing && (
               <motion.button
                 onClick={handleContinue}
                 initial={{ opacity: 0, y: 10 }}
@@ -85,6 +93,19 @@ export const CheckIn: React.FC = () => {
                 <span className="ml-2">التالي / Next</span>
                 <ChevronRight className="w-5 h-5" />
               </motion.button>
+            )}
+
+            {isAnalyzing && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="w-full p-6 rounded-2xl bg-white/95 shadow-lg"
+              >
+                <AIProcessingIndicator message="Analyzing emotions with AI..." />
+                <div className="mt-3 flex justify-center">
+                  <AIBadge text="Emotion Analysis AI" color="purple" />
+                </div>
+              </motion.div>
             )}
           </div>
         </div>
