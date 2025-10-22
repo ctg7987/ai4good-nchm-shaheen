@@ -41,15 +41,31 @@ export const Comic: React.FC = () => {
 
           <div className="bg-white rounded-2xl border-2 border-gray-300 p-6">
             <div className="grid grid-cols-2 gap-4">
-              {[1, 2, 3, 4].map((panel) => (
+              {[1, 2, 3].map((panel) => (
                 <div key={panel} className="aspect-square bg-amber-100 rounded-xl border-2 border-gray-400 overflow-hidden">
                   <img 
-                    src={`/panel${panel}.png`} 
+                    src={`/comic${panel}.png`} 
                     alt={`Comic Panel ${panel}`}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback if image doesn't load
+                      (e.target as HTMLImageElement).src = '/falcon.png';
+                    }}
                   />
                 </div>
               ))}
+              {/* Fourth panel - keep original or use another fallback */}
+              <div className="aspect-square bg-amber-100 rounded-xl border-2 border-gray-400 overflow-hidden">
+                <img 
+                  src="/panel4.png" 
+                  alt="Comic Panel 4"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback if image doesn't load
+                    (e.target as HTMLImageElement).src = '/falcon.png';
+                  }}
+                />
+              </div>
             </div>
           </div>
 

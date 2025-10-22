@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { apiClient, OllamaRequest, OllamaResponse } from '../lib/api';
 import { ArTSTVoiceInput } from './ArTSTVoiceInput';
 import { LanguageService } from '../lib/language';
+import { TypingIndicator, AIBadge, VoiceTranscriptionVisual } from './AIProcessingIndicator';
+import { AnimatePresence } from 'framer-motion';
 
 interface OllamaChatProps {
   className?: string;
@@ -13,6 +15,9 @@ export const OllamaChat: React.FC<OllamaChatProps> = ({ className = '' }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
+  const [showVoiceTranscription, setShowVoiceTranscription] = useState(false);
+  const [voiceTranscript, setVoiceTranscript] = useState('');
+  const [isListening, setIsListening] = useState(false);
   
   const currentLanguage = LanguageService.getCurrentLanguage();
   const voiceLanguage = currentLanguage === 'ar' ? 'ar-SA' : 'en-US';
@@ -97,18 +102,29 @@ export const OllamaChat: React.FC<OllamaChatProps> = ({ className = '' }) => {
 
   const handleVoiceTranscript = (transcript: string) => {
     setMessage(transcript);
+    setVoiceTranscript(transcript);
+    setShowVoiceTranscription(true);
+    setIsListening(false);
     setError('');
   };
 
   const handleVoiceError = (error: string) => {
     setError(`Voice input error: ${error}`);
+    setIsListening(false);
   };
 
   return (
     <div className={`max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg ${className}`}>
-      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        Chat with Shaheen
-      </h2>
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-3">
+          Chat with Shaheen AI
+        </h2>
+        <div className="flex justify-center gap-2 flex-wrap">
+          <AIBadge text="Powered by Ollama" icon="🤖" color="purple" />
+          <AIBadge text="Arabic & English AI" icon="🌍" color="blue" />
+          <AIBadge text="Real-time Generation" icon="⚡" color="green" />
+        </div>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -123,13 +139,29 @@ export const OllamaChat: React.FC<OllamaChatProps> = ({ className = '' }) => {
         </div>
         
         {/* Voice Input - Enhanced with ArTST */}
-        <ArTSTVoiceInput
-          onTranscript={handleVoiceTranscript}
-          onError={handleVoiceError}
-          language={voiceLanguage}
-          disabled={loading || isStreaming}
-          className="mb-4"
-        />
+        <div className="mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <AIBadge text="AI Voice Recognition" icon="🎤" color="purple" />
+          </div>
+          <ArTSTVoiceInput
+            onTranscript={handleVoiceTranscript}
+            onError={handleVoiceError}
+            language={voiceLanguage}
+            disabled={loading || isStreaming}
+            className="mb-2"
+          />
+        </div>
+
+        {/* Voice Transcription Visualization */}
+        <AnimatePresence>
+          {showVoiceTranscription && (
+            <VoiceTranscriptionVisual
+              text={voiceTranscript}
+              isListening={isListening}
+              className="mb-4"
+            />
+          )}
+        </AnimatePresence>
 
         <div className="flex space-x-4">
           <button
@@ -152,22 +184,47 @@ export const OllamaChat: React.FC<OllamaChatProps> = ({ className = '' }) => {
       </form>
 
       {error && (
-        <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-          <strong>Error:</strong> {error}
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-600">{error}</p>
         </div>
       )}
 
+      {/* AI Thinking Indicator */}
+      <AnimatePresence>
+        {(loading || isStreaming) && !response && (
+          <TypingIndicator className="mb-4 mt-4" />
+        )}
+      </AnimatePresence>
+
       {response && (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">Shaheen's Response:</h3>
-          <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
-            <p className="text-gray-800 whitespace-pre-wrap">{response}</p>
+        <div className="mt-6 mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="text-lg font-semibold text-gray-700">Shaheen's AI Response:</h3>
+            <AIBadge text="AI Generated" icon="✨" color="green" />
+          </div>
+          <div className="p-4 bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200 rounded-lg">
+            <p className="text-gray-800 whitespace-pre-wrap leading-relaxed">{response}</p>
           </div>
         </div>
       )}
 
-      <div className="mt-6 text-center text-sm text-gray-500">
-        <p>Powered by Ollama • Non-clinical emotional learning tool</p>
+      <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="flex items-start gap-3">
+          <span className="text-2xl">ℹ️</span>
+          <div className="flex-1">
+            <p className="text-sm text-blue-800 font-semibold mb-1">How AI Works Here:</p>
+            <ul className="text-xs text-blue-700 space-y-1">
+              <li>• <strong>Ollama LLM</strong> generates therapeutic responses in real-time</li>
+              <li>• <strong>ArTST</strong> processes Arabic speech recognition</li>
+              <li>• <strong>Emotion Analysis</strong> guides compassionate AI replies</li>
+              <li>• All processing happens with privacy-first design</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 text-center text-xs text-gray-500">
+        <p>Non-clinical emotional learning tool • AI-powered but not medical advice</p>
       </div>
     </div>
   );

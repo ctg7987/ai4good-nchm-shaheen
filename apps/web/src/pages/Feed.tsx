@@ -32,7 +32,7 @@ const MOCK_POSTS: FeedPost[] = [
   {
     id: '1',
     isAnonymous: true,
-    character: { id: 'sara', name: 'Sara', nameAr: 'سارة' },
+    character: { id: 'comic1', name: 'Sara', nameAr: 'سارة' },
     storyText: 'Today I felt overwhelmed with school work, but I talked to my friend and felt better.',
     thoughts: 'It\'s okay to ask for help when you need it.',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
@@ -46,7 +46,7 @@ const MOCK_POSTS: FeedPost[] = [
     id: '2',
     username: 'أحمد_123',
     isAnonymous: false,
-    character: { id: 'ahmed', name: 'Ahmed', nameAr: 'أحمد' },
+    character: { id: 'comic2', name: 'Ahmed', nameAr: 'أحمد' },
     storyText: 'I was nervous about my presentation, but I practiced and it went well.',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 6), // 6 hours ago
     comments: [
@@ -58,7 +58,7 @@ const MOCK_POSTS: FeedPost[] = [
   {
     id: '3',
     isAnonymous: true,
-    character: { id: 'layla', name: 'Layla', nameAr: 'ليلى' },
+    character: { id: 'comic3', name: 'Layla', nameAr: 'ليلى' },
     storyText: 'Sometimes I feel lonely, but I remember that many people care about me.',
     thoughts: 'Loneliness is temporary, but love is forever.',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
