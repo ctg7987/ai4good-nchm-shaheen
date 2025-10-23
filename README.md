@@ -204,10 +204,6 @@ docker-compose up -d
 - Feature usage
 - Performance data
 
-### Data Export
-- **CSV Format**: `/api/v1/metrics/export`
-- **Aggregated Data**: No personal information
-- **Judge Access**: Download usage statistics
 
 ## Development
 
