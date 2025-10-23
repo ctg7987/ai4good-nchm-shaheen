@@ -192,11 +192,11 @@ export const Breathing: React.FC = () => {
           className="text-center mb-8"
         >
           <h1 className="text-3xl font-light text-stone-800 mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            تمارين التنفس / Breathing Exercises
+            Breathing Exercises
           </h1>
           <div className="w-16 h-1 bg-green-800 mx-auto rounded-full mb-4"></div>
           <p className="text-stone-600 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            تقنيات CBT للاسترخاء وإدارة القلق / CBT techniques for relaxation and anxiety management
+            CBT techniques for relaxation and anxiety management
           </p>
         </motion.div>
 
@@ -266,15 +266,26 @@ export const Breathing: React.FC = () => {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className={`bg-white rounded-2xl shadow-sm border border-stone-200 p-6 ${isLocked ? 'opacity-75' : ''}`}
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-start gap-4">
+                    <button
+                      onClick={() => isLocked ? openPremiumModal() : handleStartExercise(exercise)}
+                      className={`flex-shrink-0 px-6 py-2 rounded-full font-medium transition-colors duration-300 ${
+                        isLocked 
+                          ? 'bg-purple-600 hover:bg-purple-700 text-white' 
+                          : 'bg-green-800 hover:bg-green-700 text-white'
+                      }`}
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                    >
+                      {isLocked ? 'Unlock' : 'Start'}
+                    </button>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <h3 className="text-lg font-medium text-stone-800" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                           {currentLanguage === 'ar' ? exercise.nameAr : exercise.name}
                         </h3>
                         {isPremiumExercise && !isPremiumUser && (
-                          <span className="px-2 py-1 bg-purple-100 border border-purple-300 rounded-full text-xs font-semibold text-purple-800">
-                            💎 Premium
+                          <span className="text-xs text-purple-600">
+                            � PREMIUM
                           </span>
                         )}
                       </div>
@@ -283,24 +294,13 @@ export const Breathing: React.FC = () => {
                       </p>
                       <div className="flex items-center gap-4 text-xs text-stone-500">
                         <span>
-                          المدة: / Duration: {Math.floor(exercise.duration / 60)}m
+                          Pattern: {exercise.pattern.inhale}-{exercise.pattern.hold}-{exercise.pattern.exhale}-{exercise.pattern.pause}
                         </span>
                         <span>
-                          النمط: / Pattern: {exercise.pattern.inhale}-{exercise.pattern.hold}-{exercise.pattern.exhale}-{exercise.pattern.pause}
+                          Duration: m{Math.floor(exercise.duration / 60)}
                         </span>
                       </div>
                     </div>
-                    <button
-                      onClick={() => isLocked ? openPremiumModal() : handleStartExercise(exercise)}
-                      className={`ml-4 px-6 py-3 rounded-full font-medium transition-colors duration-300 ${
-                        isLocked 
-                          ? 'bg-purple-600 hover:bg-purple-700 text-white' 
-                          : 'bg-green-800 hover:bg-green-700 text-white'
-                      }`}
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                    >
-                      {isLocked ? '🔓 Upgrade' : (currentLanguage === 'ar' ? 'ابدأ' : 'Start')}
-                    </button>
                   </div>
                 </motion.div>
               );

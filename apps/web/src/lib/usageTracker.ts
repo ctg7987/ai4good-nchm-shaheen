@@ -3,6 +3,9 @@
  * Tracks user activity to enforce free tier limits and show upgrade prompts
  */
 
+// DEVELOPER MODE: Set to true to bypass all limits during development
+const DEVELOPER_MODE = false;
+
 interface UsageData {
   comicsGenerated: number;
   breathingExercisesCompleted: number;
@@ -83,6 +86,9 @@ class UsageTrackerService {
 
   // Check if user is premium
   isPremium(): boolean {
+    // Developer mode: Always return true for unlimited access
+    if (DEVELOPER_MODE) return true;
+    
     const data = this.getData();
     
     // Check if premium expired

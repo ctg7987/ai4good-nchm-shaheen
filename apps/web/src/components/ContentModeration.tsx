@@ -33,7 +33,7 @@ export const ContentModerationBadge: React.FC<ContentModerationBadgeProps> = ({
     >
       <span>✓</span>
       <span>AI-Verified Safe</span>
-      {safetyScore > 0 && <span className="text-green-600">({safetyScore}/100)</span>}
+      {safetyScore > 0 && <span className="text-green-600">{safetyScore}/100</span>}
     </motion.div>
   );
 };

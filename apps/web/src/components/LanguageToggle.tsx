@@ -7,12 +7,20 @@ interface LanguageToggleProps {
 }
 
 export const LanguageToggle: React.FC<LanguageToggleProps> = ({ className = '' }) => {
-  const currentLanguage = LanguageService.getCurrentLanguage();
+  const [currentLanguage, setCurrentLanguage] = React.useState<Language>(LanguageService.getCurrentLanguage());
+
+  React.useEffect(() => {
+    const handleLanguageChange = (event: CustomEvent) => {
+      setCurrentLanguage(event.detail.language);
+    };
+    
+    window.addEventListener('languagechange' as any, handleLanguageChange);
+    return () => window.removeEventListener('languagechange' as any, handleLanguageChange);
+  }, []);
 
   const handleLanguageChange = (language: Language) => {
-    LanguageService.setLanguage(language);
-    // Force page reload to apply all changes
-    window.location.reload();
+    LanguageService.setLanguage(language, false); // No reload
+    setCurrentLanguage(language);
   };
 
   return (

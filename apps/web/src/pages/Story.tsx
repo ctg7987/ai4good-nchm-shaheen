@@ -4,7 +4,6 @@ import { ArrowLeft } from 'lucide-react';
 import { PhoneFrame } from '../components/PhoneFrame';
 import { AIProcessingIndicator, AIBadge } from '../components/AIProcessingIndicator';
 import { UsageTracker } from '../lib/usageTracker';
-import { openPremiumModal } from '../App';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Character {
@@ -22,33 +21,34 @@ export const Story: React.FC = () => {
   const [hasConsent, setHasConsent] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationProgress, setGenerationProgress] = useState(0);
-  const [comicsRemaining, setComicsRemaining] = useState(5);
-  const [isPremium, setIsPremium] = useState(false);
+  const [isAnalyzingEmotion, setIsAnalyzingEmotion] = useState(false);
+  const [emotionAnalysisComplete, setEmotionAnalysisComplete] = useState(false);
 
+  // Trigger emotion analysis when consent is given
   useEffect(() => {
-    // Check usage limits
-    setComicsRemaining(UsageTracker.getComicsRemaining());
-    setIsPremium(UsageTracker.isPremium());
-  }, []);
+    if (hasConsent && !emotionAnalysisComplete && !isAnalyzingEmotion) {
+      startEmotionAnalysis();
+    }
+  }, [hasConsent]);
+
+  const startEmotionAnalysis = async () => {
+    setIsAnalyzingEmotion(true);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsAnalyzingEmotion(false);
+    setEmotionAnalysisComplete(true);
+  };
 
   const handleStoryChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setStoryText(e.target.value);
   };
 
   const handleGenerateComic = async () => {
-    // Check if user can generate comics
-    if (!UsageTracker.canGenerateComic()) {
-      openPremiumModal();
-      return;
-    }
-
     if (selectedCharacter && hasConsent) {
       setIsGenerating(true);
       setGenerationProgress(0);
       
       // Track usage
       UsageTracker.trackComicGenerated();
-      setComicsRemaining(UsageTracker.getComicsRemaining());
       
       try {
         // Call Ollama API for narrative generation
@@ -104,17 +104,18 @@ export const Story: React.FC = () => {
 
   return (
     <PhoneFrame>
-      <div className="min-h-full bg-amber-50 p-6 pb-32">
-        <div className="max-w-2xl mx-auto space-y-6 mb-8">
+      <div className="h-full bg-amber-50 flex flex-col pb-24">
+        <div className="flex-1 overflow-y-auto px-6 pt-6">
+          <div className="max-w-2xl mx-auto space-y-6 mb-8">
           {/* Header with back button */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-start mb-4">
             <button
               onClick={handleBack}
               className="flex items-center gap-2 text-green-800 hover:text-green-900 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
               <span className="text-sm font-medium">
-                رجوع / Back
+                Back
               </span>
             </button>
           </div>
@@ -125,20 +126,6 @@ export const Story: React.FC = () => {
             </h1>
             <div className="flex justify-center gap-2 items-center flex-wrap">
               <AIBadge text="AI Comic Generation" icon="🎨" color="purple" />
-              {!isPremium && (
-                <div className="px-3 py-1 bg-amber-100 border-2 border-amber-300 rounded-full text-xs font-semibold text-amber-800">
-                  {comicsRemaining === 0 ? (
-                    <>🔒 Limit Reached - Upgrade to Premium</>
-                  ) : (
-                    <>⭐ {comicsRemaining} free comics remaining this month</>
-                  )}
-                </div>
-              )}
-              {isPremium && (
-                <div className="px-3 py-1 bg-purple-100 border-2 border-purple-300 rounded-full text-xs font-semibold text-purple-800">
-                  💎 Premium - Unlimited Comics
-                </div>
-              )}
             </div>
           </div>
           
@@ -146,14 +133,14 @@ export const Story: React.FC = () => {
             <textarea
               value={storyText}
               onChange={handleStoryChange}
-                     placeholder="اكتب قصتك هنا... / Write your story here..."
-              className="w-full p-3 rounded-xl border border-gray-300 focus:border-green-800 focus:outline-none resize-none"
+              placeholder="Write your story here..."
+              className="w-full p-3 rounded-xl border border-gray-300 focus:border-green-800 focus:outline-none resize-none text-left"
               rows={6}
             />
           </div>
 
           <div>
-            <p className="text-sm text-gray-600 mb-3">اختر شخصيتك / Choose your character:</p>
+            <p className="text-sm text-gray-600 mb-3">Choose your character:</p>
             <div className="flex gap-4 overflow-x-auto pb-4">
               {characters.map((char) => (
                 <button
@@ -185,6 +172,38 @@ export const Story: React.FC = () => {
                 أوافق على مشاركة قصتي بشكل مجهول / I consent to share my story anonymously
               </span>
             </label>
+
+            {/* Emotion Analysis - Shows after consent is given */}
+            {isAnalyzingEmotion && (
+              <AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="w-full p-4 rounded-xl bg-white shadow-md border-2 border-purple-200"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <AIProcessingIndicator message="Analyzing emotions..." showBrain={false} />
+                    <AIBadge text="AI" color="purple" />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            )}
+
+            {emotionAnalysisComplete && !isAnalyzingEmotion && (
+              <AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="w-full p-3 rounded-xl bg-green-50 border-2 border-green-300"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-lg">✓</span>
+                    <span className="text-green-700 text-sm font-semibold">Emotion Analysis Complete!</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            )}
 
             <button
               onClick={handleGenerateComic}
@@ -246,6 +265,7 @@ export const Story: React.FC = () => {
               )}
             </AnimatePresence>
           </div>
+        </div>
         </div>
       </div>
     </PhoneFrame>

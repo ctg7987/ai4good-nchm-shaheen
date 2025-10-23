@@ -73,9 +73,10 @@ export const Comic: React.FC = () => {
             <textarea
               value={thoughts}
               onChange={handleThoughtsChange}
-              placeholder="أضف أفكارك... / Add your thoughts..."
+              placeholder="Add your thoughts..."
               className="w-full p-3 rounded-xl border border-gray-300 focus:border-green-800 focus:outline-none resize-none"
               rows={3}
+              dir="auto"
             />
           </div>
 
@@ -83,7 +84,7 @@ export const Comic: React.FC = () => {
             onClick={handlePost}
             className="w-full py-5 rounded-full bg-green-800 hover:bg-green-900 text-white text-xl font-medium transition-colors"
           >
-            نشر على شاهين / POST TO SHAHEEN
+            Post to Shaheen
           </button>
 
           <button

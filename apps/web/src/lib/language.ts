@@ -40,7 +40,7 @@ export class LanguageService {
     return this.currentLanguage;
   }
 
-  static setLanguage(language: Language): void {
+  static setLanguage(language: Language, reload: boolean = false): void {
     if (typeof window !== 'undefined') {
       this.currentLanguage = language;
       localStorage.setItem(this.STORAGE_KEY, language);
@@ -53,11 +53,22 @@ export class LanguageService {
       html.setAttribute('dir', config.direction);
       html.style.fontFamily = config.font;
       
+      // Update body direction as well
+      document.body.setAttribute('dir', config.direction);
+      
       // Update text alignment based on direction
       if (config.direction === 'rtl') {
         html.style.textAlign = 'right';
       } else {
         html.style.textAlign = 'left';
+      }
+      
+      // Trigger custom event for components to listen to
+      window.dispatchEvent(new CustomEvent('languagechange', { detail: { language } }));
+      
+      // Optional reload for full effect
+      if (reload) {
+        window.location.reload();
       }
     }
   }

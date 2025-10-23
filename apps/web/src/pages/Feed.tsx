@@ -40,7 +40,7 @@ const MOCK_POSTS: FeedPost[] = [
     comments: [
       { id: '1', text: 'شكراً على المشاركة، أنت لست وحدك 💚', isAnonymous: true, likes: 5, isLiked: false }
     ],
-    featherCount: 24,
+    featherCount: 19,
     isLiked: false
   },
   {
@@ -53,7 +53,7 @@ const MOCK_POSTS: FeedPost[] = [
     comments: [
       { id: '2', text: 'قصة ملهمة جداً', isAnonymous: true, likes: 3, isLiked: false }
     ],
-    featherCount: 45,
+    featherCount: 35,
     isLiked: false
   },
   {
@@ -73,7 +73,7 @@ const MOCK_POSTS: FeedPost[] = [
   {
     id: '4',
     isAnonymous: true,
-    character: { id: 'noor', name: 'Noor', nameAr: 'نور' },
+    character: { id: 'panel1', name: 'Noor', nameAr: 'نور' },
     storyText: 'Had a great day helping my family with chores.',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 12), // 12 hours ago
     comments: [
@@ -85,7 +85,7 @@ const MOCK_POSTS: FeedPost[] = [
   {
     id: '5',
     isAnonymous: true,
-    character: { id: 'omar', name: 'Omar', nameAr: 'عمر' },
+    character: { id: 'panel2', name: 'Omar', nameAr: 'عمر' },
     storyText: 'I feel the same way sometimes',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 18), // 18 hours ago
     comments: [
@@ -252,6 +252,18 @@ export const Feed: React.FC = () => {
                       src={`/${post.character.id}.png`} 
                       alt={post.character.name}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Fallback if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent && !parent.querySelector('.fallback-text')) {
+                          const fallback = document.createElement('div');
+                          fallback.className = 'fallback-text text-gray-600 text-center p-8';
+                          fallback.innerHTML = `<div class="text-4xl mb-2">🎨</div><div class="text-sm">${post.character.name}'s Story</div>`;
+                          parent.appendChild(fallback);
+                        }
+                      }}
                     />
                   </div>
                   <div className="flex items-center gap-4 mb-3">
