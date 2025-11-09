@@ -1,6 +1,7 @@
-version: '3.8'
-
 services:
+  # -------------------------------
+  # Dev Container (Cursor / VSCode)
+  # -------------------------------
   dev:
     build:
       context: .
@@ -12,7 +13,14 @@ services:
     environment:
       - NODE_ENV=development
       - PYTHONPATH=/workspace/apps/api
+    depends_on:
+      - api
+      - web
+      - qdrant
 
+  # -------------------------------
+  # Web Frontend (Vite + Node)
+  # -------------------------------
   web:
     build:
       context: ./apps/web
@@ -25,9 +33,14 @@ services:
     environment:
       - NODE_ENV=development
       - VITE_API_URL=http://localhost:8000
+    working_dir: /app
+    command: npm run dev
     depends_on:
       - api
 
+  # -------------------------------
+  # API Backend (FastAPI / Python)
+  # -------------------------------
   api:
     build:
       context: ./apps/api
@@ -40,9 +53,14 @@ services:
       - PYTHONPATH=/app
       - QDRANT_URL=http://qdrant:6333
       - DEBUG=true
+    working_dir: /app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - qdrant
 
+  # -------------------------------
+  # Qdrant Vector Database
+  # -------------------------------
   qdrant:
     image: qdrant/qdrant:latest
     ports:
@@ -53,6 +71,6 @@ services:
       - QDRANT__SERVICE__HTTP_PORT=6333
       - QDRANT__SERVICE__GRPC_PORT=6334
 
+# Persistent data storage for Qdrant
 volumes:
   qdrant_data:
-

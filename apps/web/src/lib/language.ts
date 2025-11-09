@@ -24,7 +24,8 @@ export const LANGUAGES: Record<Language, LanguageConfig> = {
 
 export class LanguageService {
   private static readonly STORAGE_KEY = 'ncmh-language';
-  private static currentLanguage: Language = 'ar';
+  // Default to English instead of Arabic unless stored preference exists
+  private static currentLanguage: Language = 'en';
 
   static getCurrentLanguage(): Language {
     if (typeof window !== 'undefined') {
@@ -32,9 +33,9 @@ export class LanguageService {
       if (stored && LANGUAGES[stored]) {
         this.currentLanguage = stored;
       } else {
-        // If no stored language, use Arabic as default and store it
-        this.currentLanguage = 'ar';
-        localStorage.setItem(this.STORAGE_KEY, 'ar');
+        // If no stored language, use English as default and store it
+        this.currentLanguage = 'en';
+        localStorage.setItem(this.STORAGE_KEY, 'en');
       }
     }
     return this.currentLanguage;

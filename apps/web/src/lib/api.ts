@@ -300,6 +300,14 @@ class ApiClient {
       method: 'POST',
     });
   }
+
+  // Art generation (single image) API
+  async generateArt(prompt: string, style?: string): Promise<{ image_url: string; prompt_used: string }> {
+    return this.request<{ image_url: string; prompt_used: string }>('/api/v1/art/generate', {
+      method: 'POST',
+      body: JSON.stringify({ prompt, style })
+    });
+  }
 }
 
 export const apiClient = new ApiClient();

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { PhoneFrame } from '../components/PhoneFrame';
-import { AIProcessingIndicator, AIBadge } from '../components/AIProcessingIndicator';
-import { UsageTracker } from '../lib/usageTracker';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AIProcessingIndicator, AIBadge } from '../components/AIProcessingIndicator';
+import { LanguageService, Language } from '../lib/language';
 
 interface Character {
   id: string;
@@ -16,256 +16,183 @@ interface Character {
 export const Story: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [storyText, setStoryText] = useState(location.state?.userInput || '');
+  const storedText = location.state?.userInput || ''; // text carried from previous screen
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [hasConsent, setHasConsent] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generationProgress, setGenerationProgress] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [isAnalyzingEmotion, setIsAnalyzingEmotion] = useState(false);
   const [emotionAnalysisComplete, setEmotionAnalysisComplete] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(LanguageService.getCurrentLanguage());
 
-  // Trigger emotion analysis when consent is given
+  useEffect(() => {
+    const handleLang = (e: CustomEvent) => setCurrentLanguage(e.detail.language);
+    window.addEventListener('languagechange', handleLang as EventListener);
+    return () => window.removeEventListener('languagechange', handleLang as EventListener);
+  }, []);
+
+  // const t = useTranslations(currentLanguage); // translations currently handled manually for new layout strings
+
+  const characters: Character[] = [
+    { id: 'falcon', name: 'Falcon', nameAr: 'صقر', image: '/falcon.png' },
+    { id: 'omar', name: 'Omar', nameAr: 'عمر', image: '/omar.png' },
+    { id: 'layla', name: 'Layla', nameAr: 'ليلى', image: '/layla.png' },
+    { id: 'noor', name: 'Noor', nameAr: 'نور', image: '/noor.png' }
+  ];
+
+  // New heading: Select a character
+  const headingText = currentLanguage === 'ar' ? 'اختر شخصية' : 'Select a character';
+  const consentLabel = currentLanguage === 'ar'
+    ? 'أوافق على مشاركة قصتي بشكل مجهول'
+    : 'I consent to share my story anonymously';
+  const consentHelper = currentLanguage === 'ar'
+    ? 'هذا يسمح ل شاهين بتحليل نصك وإنشاء قصة مصورة بالذكاء الاصطناعي'
+    : 'This allows Shaheen to analyze your text and create an AI comic.';
+  const chooseCharacter = currentLanguage === 'ar' ? 'اختر شخصيتك' : 'Choose your character';
+  const generateBase = currentLanguage === 'ar' ? 'إنشاء القصة المصورة' : 'Generate Comic';
+  const analyzingText = currentLanguage === 'ar' ? 'جارٍ تحليل قصتك...' : 'Analyzing your story…';
+
+  const handleBack = () => navigate('/');
+
+  const startEmotionAnalysis = async () => {
+    setIsAnalyzingEmotion(true);
+    // Simulate analysis duration
+    await new Promise(r => setTimeout(r, 2000));
+    setIsAnalyzingEmotion(false);
+    setEmotionAnalysisComplete(true);
+  };
+
+  // Trigger analysis when consent toggled on first time
   useEffect(() => {
     if (hasConsent && !emotionAnalysisComplete && !isAnalyzingEmotion) {
       startEmotionAnalysis();
     }
   }, [hasConsent]);
 
-  const startEmotionAnalysis = async () => {
-    setIsAnalyzingEmotion(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsAnalyzingEmotion(false);
-    setEmotionAnalysisComplete(true);
-  };
-
-  const handleStoryChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setStoryText(e.target.value);
-  };
-
-  const handleGenerateComic = async () => {
-    if (selectedCharacter && hasConsent) {
-      setIsGenerating(true);
-      setGenerationProgress(0);
-      
-      // Track usage
-      UsageTracker.trackComicGenerated();
-      
-      try {
-        // Call Ollama API for narrative generation
-        const progressSteps = [
-          { progress: 10, message: 'Connecting to Ollama AI...' },
-          { progress: 20, message: 'Analyzing emotions with AI...' },
-          { progress: 35, message: 'Ollama generating narrative arc...' },
-          { progress: 50, message: 'Creating therapeutic metaphor...' },
-          { progress: 65, message: 'Generating comic panel 1...' },
-          { progress: 75, message: 'Generating comic panel 2...' },
-          { progress: 85, message: 'Generating comic panel 3...' },
-          { progress: 95, message: 'Finalizing with Stable Diffusion...' },
-          { progress: 100, message: 'Complete!' }
-        ];
-        
-        for (const step of progressSteps) {
-          await new Promise(resolve => setTimeout(resolve, 600));
-          setGenerationProgress(step.progress);
-        }
-        
-        // In production, this would call the actual Ollama API:
-        // const response = await fetch('http://localhost:8000/api/narrative/generate', {
-        //   method: 'POST',
-        //   body: JSON.stringify({ text: storyText, mood: 'neutral' })
-        // });
-        
-      } catch (error) {
-        console.error('Error generating comic:', error);
-      }
-      
-      setTimeout(() => {
-        navigate('/comic', {
-          state: {
-            storyText,
-            character: selectedCharacter
-          }
-        });
-      }, 500);
+  const handleGenerate = async () => {
+    if (!hasConsent || !selectedCharacter || !storedText) return;
+    setIsProcessing(true);
+    try {
+      // Analyze endpoint
+      await fetch('http://localhost:8000/api/narrative/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: storedText })
+      });
+      // Comic generation endpoint
+      await fetch('http://localhost:8000/api/narrative/comic', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: storedText, character: selectedCharacter.id })
+      });
+      navigate('/comic', { state: { storyText: storedText, character: selectedCharacter } });
+    } catch (e) {
+      console.error('Generation failed', e);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  const handleBack = () => {
-    navigate('/');
-  };
-
-  const characters = [
-    { id: 'falcon', name: 'Falcon', nameAr: 'صقر', image: '/falcon.png', color: 'bg-amber-100' },
-    { id: 'omar', name: 'Omar', nameAr: 'عمر', image: '/omar.png', color: 'bg-blue-100' },
-    { id: 'layla', name: 'Layla', nameAr: 'ليلى', image: '/layla.png', color: 'bg-pink-100' },
-    { id: 'fahad', name: 'Fahad', nameAr: 'فهد', image: '/fahad.png', color: 'bg-teal-100' },
-    { id: 'noor', name: 'Noor', nameAr: 'نور', image: '/noor.png', color: 'bg-purple-100' },
-  ];
+  const sectionVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } };
 
   return (
     <PhoneFrame>
-      <div className="h-full bg-amber-50 flex flex-col pb-24">
+      <div className="h-full bg-[#0E4A3B] flex flex-col pb-24" dir="auto">
         <div className="flex-1 overflow-y-auto px-6 pt-6">
-          <div className="max-w-2xl mx-auto space-y-6 mb-8">
-          {/* Header with back button */}
-          <div className="flex items-center justify-start mb-4">
-            <button
-              onClick={handleBack}
-              className="flex items-center gap-2 text-green-800 hover:text-green-900 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-sm font-medium">
-                Back
-              </span>
-            </button>
-          </div>
-          
-          <div className="text-center space-y-3">
-            <h1 className="text-3xl font-light text-gray-800">
-              احكِ قصتك / Tell Your Story
-            </h1>
-            <div className="flex justify-center gap-2 items-center flex-wrap">
-              <AIBadge text="AI Comic Generation" icon="🎨" color="purple" />
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl border-2 border-gray-300 p-6">
-            <textarea
-              value={storyText}
-              onChange={handleStoryChange}
-              placeholder="Write your story here..."
-              className="w-full p-3 rounded-xl border border-gray-300 focus:border-green-800 focus:outline-none resize-none text-left"
-              rows={6}
-            />
-          </div>
+          <div className="max-w-xl mx-auto space-y-8">
+            {/* Back button */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ duration: 0.6 }}>
+              <button onClick={handleBack} className="flex items-center gap-2 text-[#F5F5F5] hover:text-white transition-colors">
+                <ArrowLeft className="w-5 h-5" />
+                <span className="text-xs font-medium" style={{ fontFamily: 'Inter, system-ui' }}>{currentLanguage === 'ar' ? 'رجوع' : 'Back'}</span>
+              </button>
+            </motion.div>
 
-          <div>
-            <p className="text-sm text-gray-600 mb-3">Choose your character:</p>
-            <div className="flex gap-4 overflow-x-auto pb-4">
-              {characters.map((char) => (
-                <button
-                  key={char.id}
-                  onClick={() => setSelectedCharacter(char)}
-                  className={`flex-shrink-0 w-24 h-24 rounded-2xl ${char.color} border-4 transition-all overflow-hidden ${
-                    selectedCharacter?.id === char.id ? 'border-green-800 scale-105' : 'border-transparent'
-                  }`}
-                >
-                  <img 
-                    src={char.image} 
-                    alt={char.name}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
+            {/* Title Section (Heading + badge) */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ duration: 0.6, delay: 0.1 }} className="text-center space-y-4">
+              <h1 className="text-4xl md:text-5xl" style={{ fontFamily: '"Playfair Display", Georgia, serif', fontWeight: 600, color: '#F5F5F5' }}>{headingText}</h1>
+              <div className="flex justify-center">
+                <span className="px-3 py-1 rounded-full text-xs" style={{ background: '#E9D5FF', color: '#4B0082', fontFamily: 'Inter, system-ui', fontWeight: 500 }}>
+                  {currentLanguage === 'ar' ? 'إنشاء قصة مصورة بالذكاء الاصطناعي ✋' : 'AI Comic Generation ✋'}
+                </span>
+              </div>
+            </motion.div>
 
-          <div className="space-y-3">
-            <label className="flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-300">
-              <input
-                type="checkbox"
-                checked={hasConsent}
-                onChange={(e) => setHasConsent(e.target.checked)}
-                className="mt-1 w-5 h-5 text-green-800 rounded focus:ring-green-800"
-              />
-              <span className="text-sm text-gray-700">
-                أوافق على مشاركة قصتي بشكل مجهول / I consent to share my story anonymously
-              </span>
-            </label>
+            {/* Character Selection (horizontal scroll) */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ duration: 0.6, delay: 0.2 }} className="bg-white rounded-2xl p-6 shadow-md space-y-5">
+              <p className="text-sm text-center" style={{ fontFamily: 'Inter, system-ui', fontWeight: 500, color: '#475569' }}>{chooseCharacter}</p>
+              <div className="flex gap-4 overflow-x-auto pb-2 px-1" style={{ WebkitOverflowScrolling: 'touch' }}>
+                {characters.map(char => (
+                  <button
+                    key={char.id}
+                    onClick={() => setSelectedCharacter(char)}
+                    className={`flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border-2 transition-all ${selectedCharacter?.id === char.id ? 'border-green-700 shadow-lg scale-105' : 'border-transparent'}`}
+                    aria-label={currentLanguage === 'ar' ? char.nameAr : char.name}
+                  >
+                    <img src={char.image} alt={char.name} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            </motion.div>
 
-            {/* Emotion Analysis - Shows after consent is given */}
-            {isAnalyzingEmotion && (
+            {/* Reflection Text (read-only display) */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ duration: 0.6, delay: 0.3 }} className="bg-white rounded-2xl p-5 shadow-md">
+              <p className="text-xs mb-2" style={{ fontFamily: 'Inter, system-ui', fontWeight: 500, color: '#475569' }}>
+                {currentLanguage === 'ar' ? 'نصك المدخل' : 'Your reflection'}
+              </p>
+              <div className="rounded-xl bg-gray-50 border border-gray-200 p-4 text-sm leading-relaxed" style={{ fontFamily: 'Inter, system-ui', color: '#334155' }} dir="auto">
+                {storedText || (currentLanguage === 'ar' ? 'لا يوجد نص.' : 'No text provided.')}
+              </div>
+            </motion.div>
+
+            {/* Consent Section moved below text + analyzing indicator */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ duration: 0.6, delay: 0.4 }} className="bg-white rounded-2xl p-5 shadow-md space-y-3">
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={hasConsent}
+                  onChange={(e) => setHasConsent(e.target.checked)}
+                  className="w-5 h-5 accent-green-700"
+                />
+                <span className="text-sm" style={{ fontFamily: 'Inter, system-ui', fontWeight: 500, color: '#334155' }}>{consentLabel}</span>
+              </label>
+              <p className="text-xs" style={{ fontFamily: 'Inter, system-ui', fontWeight: 300, color: '#64748B' }}>{consentHelper}</p>
               <AnimatePresence>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="w-full p-4 rounded-xl bg-white shadow-md border-2 border-purple-200"
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    <AIProcessingIndicator message="Analyzing emotions..." showBrain={false} />
-                    <AIBadge text="AI" color="purple" />
-                  </div>
-                </motion.div>
+                {isAnalyzingEmotion && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    className="w-full p-3 rounded-xl bg-green-50 border border-green-200 flex items-center justify-center gap-2"
+                  >
+                    <AIProcessingIndicator message={currentLanguage === 'ar' ? 'جارٍ تحليل المشاعر...' : 'Analyzing emotions...'} showBrain={false} />
+                    <AIBadge text="AI" color="green" />
+                  </motion.div>
+                )}
+                {emotionAnalysisComplete && !isAnalyzingEmotion && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="w-full p-3 rounded-xl bg-green-100 border border-green-300 text-center text-sm font-medium text-green-700"
+                  >
+                    {currentLanguage === 'ar' ? 'اكتمل تحليل المشاعر' : 'Emotion Analysis Complete!'}
+                  </motion.div>
+                )}
               </AnimatePresence>
-            )}
+            </motion.div>
 
-            {emotionAnalysisComplete && !isAnalyzingEmotion && (
-              <AnimatePresence>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="w-full p-3 rounded-xl bg-green-50 border-2 border-green-300"
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-lg">✓</span>
-                    <span className="text-green-700 text-sm font-semibold">Emotion Analysis Complete!</span>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            )}
-
-            <button
-              onClick={handleGenerateComic}
-              disabled={!hasConsent || isGenerating}
-              className={`w-full py-4 rounded-full text-white font-medium transition-all ${
-                hasConsent && !isGenerating
-                  ? 'bg-green-800 hover:bg-green-900' 
-                  : 'bg-gray-400 cursor-not-allowed'
-              }`}
-            >
-              {isGenerating ? 'Generating AI Comic...' : 'إنشاء القصة المصورة / Generate Comic'}
-            </button>
-
-            {/* AI Generation Progress */}
-            <AnimatePresence>
-              {isGenerating && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="space-y-4 bg-white rounded-2xl p-6 border-2 border-purple-200"
-                >
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <div className="px-3 py-1 bg-purple-100 border border-purple-300 rounded-full text-xs font-semibold text-purple-800">
-                      🤖 Ollama API
-                    </div>
-                    <div className="px-3 py-1 bg-blue-100 border border-blue-300 rounded-full text-xs font-semibold text-blue-800">
-                      🎨 Stable Diffusion
-                    </div>
-                  </div>
-
-                  <AIProcessingIndicator 
-                    message={`AI Processing... ${generationProgress}%`}
-                    showBrain={true}
-                  />
-                  
-                  {/* Progress Bar */}
-                  <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-purple-600 via-blue-600 to-green-600"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${generationProgress}%` }}
-                      transition={{ duration: 0.5 }}
-                    />
-                  </div>
-                  
-                  <div className="text-center space-y-2">
-                    <p className="text-sm font-semibold text-gray-800">
-                      {generationProgress < 35 ? '🧠 Ollama analyzing emotions...' :
-                       generationProgress < 65 ? '📝 Generating narrative with AI...' :
-                       generationProgress < 95 ? '🎨 Creating comic panels...' :
-                       '✅ Complete!'}
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      Calling Ollama API → Emotion Analysis → Stable Diffusion Generation
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Generate Button at bottom */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ duration: 0.6, delay: 0.5 }} className="flex justify-center pt-2 pb-8">
+              <button
+                onClick={handleGenerate}
+                disabled={!hasConsent || !selectedCharacter || !storedText || isProcessing}
+                className={`w-full py-4 rounded-full font-semibold shadow-md transition-all ${( !hasConsent || !selectedCharacter || !storedText ) ? 'bg-gray-400 cursor-not-allowed text-gray-700' : 'bg-[#FCD34D] hover:bg-[#FBBF24] text-[#0E4A3B]'} ${isProcessing ? 'animate-pulse' : ''}`}
+                style={{ fontFamily: 'Inter, system-ui' }}
+              >
+                {isProcessing ? analyzingText : generateBase}
+              </button>
+            </motion.div>
           </div>
-        </div>
         </div>
       </div>
     </PhoneFrame>

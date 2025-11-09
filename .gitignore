@@ -138,3 +138,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .venv/
+
+# Editor settings
+.vscode/
+
+# Python cache
+__pycache__/
+**/__pycache__/
