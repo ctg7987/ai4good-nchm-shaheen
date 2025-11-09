@@ -20,19 +20,23 @@ COPY packages/shared/package*.json ./packages/shared/
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Install Python dependencies
+# Install Python 3.11 from deadsnakes PPA
 RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa -y \
+    && apt-get update && apt-get install -y \
     python3.11 \
-    python3.11-pip \
     python3.11-venv \
+    python3.11-distutils \
     && rm -rf /var/lib/apt/lists/*
 
-# Create virtual environment
+# Create virtual environment and install pip
 RUN python3.11 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install Python packages
-RUN pip install --upgrade pip setuptools wheel
+# Install pip and Python packages
+RUN python3.11 -m ensurepip --upgrade && \
+    /opt/venv/bin/pip install --upgrade pip setuptools wheel
 
 # Set default shell
 SHELL ["/bin/bash", "-c"]

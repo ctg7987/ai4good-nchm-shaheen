@@ -17,11 +17,9 @@ export const PhoneFrame: React.FC<PhoneFrameProps> = ({ children, className = ''
     // Update time immediately
     const updateTime = () => {
       const now = new Date();
-      let hours = now.getHours();
+      const hours = now.getHours();
       const minutes = now.getMinutes();
-      hours = hours % 12;
-      hours = hours ? hours : 12; // Convert 0 to 12
-      const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')}`;
+      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       setCurrentTime(formattedTime);
     };
 
@@ -76,8 +74,6 @@ export const PhoneFrame: React.FC<PhoneFrameProps> = ({ children, className = ''
                <div className="absolute top-0 left-0 right-0 h-16 bg-white z-20 flex items-center justify-between px-6 pt-8">
                  {/* Left side - Battery Icon */}
                  <div className="flex items-center gap-0">
-                   {/* Battery tip - on left */}
-                   <div className="w-[1.5px] h-[7px] bg-black/60 rounded-l-[1px]"></div>
                    {/* Battery body */}
                    <div className="relative">
                      <div className="w-[22px] h-[11px] border-[1.5px] border-black/90 rounded-[2.5px] bg-white relative overflow-hidden">
@@ -89,6 +85,8 @@ export const PhoneFrame: React.FC<PhoneFrameProps> = ({ children, className = ''
                        ></div>
                      </div>
                    </div>
+                   {/* Battery tip - on right */}
+                   <div className="w-[1.5px] h-[7px] bg-black/60 rounded-r-[1px]"></div>
                  </div>
                  
                  {/* Center - Time */}
@@ -96,10 +94,6 @@ export const PhoneFrame: React.FC<PhoneFrameProps> = ({ children, className = ''
                  
                  {/* Right side - Cellular Signal & WiFi */}
                  <div className="flex items-center gap-1.5">
-                   {/* WiFi Signal - iOS style */}
-                   <svg className="w-[15px] h-[11px] text-black" fill="currentColor" viewBox="0 0 640 512">
-                     <path d="M634.91 154.88C457.74-8.99 182.19-8.93 5.09 154.88c-6.66 6.16-6.79 16.59-.35 22.98l34.24 33.97c6.14 6.09 16.02 6.23 22.4.38 145.92-133.68 371.3-133.71 517.25 0 6.38 5.85 16.26 5.71 22.4-.38l34.24-33.97c6.43-6.39 6.3-16.82-.36-22.98zM320 352c-35.35 0-64 28.65-64 64s28.65 64 64 64 64-28.65 64-64-28.65-64-64-64zm202.67-83.59c-115.26-101.93-290.21-101.82-405.34 0-6.9 6.1-7.12 16.69-.57 23.15l34.44 33.99c6 5.92 15.66 6.32 22.05.8 83.95-72.57 209.74-72.41 293.49 0 6.39 5.52 16.05 5.13 22.05-.8l34.44-33.99c6.56-6.46 6.33-17.06-.56-23.15z"/>
-                   </svg>
                    {/* Cellular Signal - iOS style bars */}
                    <div className="flex items-end gap-[2px]">
                      <div className="w-[3px] h-[4px] bg-black rounded-[0.5px]"></div>
@@ -107,6 +101,10 @@ export const PhoneFrame: React.FC<PhoneFrameProps> = ({ children, className = ''
                      <div className="w-[3px] h-[8px] bg-black rounded-[0.5px]"></div>
                      <div className="w-[3px] h-[10px] bg-black rounded-[0.5px]"></div>
                    </div>
+                   {/* WiFi Signal - iOS style */}
+                   <svg className="w-[15px] h-[11px] text-black" fill="currentColor" viewBox="0 0 640 512">
+                     <path d="M634.91 154.88C457.74-8.99 182.19-8.93 5.09 154.88c-6.66 6.16-6.79 16.59-.35 22.98l34.24 33.97c6.14 6.09 16.02 6.23 22.4.38 145.92-133.68 371.3-133.71 517.25 0 6.38 5.85 16.26 5.71 22.4-.38l34.24-33.97c6.43-6.39 6.3-16.82-.36-22.98zM320 352c-35.35 0-64 28.65-64 64s28.65 64 64 64 64-28.65 64-64-28.65-64-64-64zm202.67-83.59c-115.26-101.93-290.21-101.82-405.34 0-6.9 6.1-7.12 16.69-.57 23.15l34.44 33.99c6 5.92 15.66 6.32 22.05.8 83.95-72.57 209.74-72.41 293.49 0 6.39 5.52 16.05 5.13 22.05-.8l34.44-33.99c6.56-6.46 6.33-17.06-.56-23.15z"/>
+                   </svg>
                  </div>
                </div>
 
@@ -135,7 +133,10 @@ export const PhoneFrame: React.FC<PhoneFrameProps> = ({ children, className = ''
                     </button>
                     <button 
                       onClick={() => handleNavigation('/')}
-                      className="p-6 bg-green-800 rounded-full text-white -mt-8 shadow-lg hover:bg-green-900 transition-colors"
+                      className="p-6 rounded-full text-white -mt-8 shadow-lg transition-colors"
+                      style={{ backgroundColor: '#1B5E4A' }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0E4A3B'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1B5E4A'}
                     >
                       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />

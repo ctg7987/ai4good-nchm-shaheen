@@ -6,6 +6,12 @@ export interface Translations {
   redeem: string;
   
   // Check-in page
+  shaheenWelcomesYou: string;
+  beforeYouContinue: string;
+  typeHere: string;
+  useVoice: string;
+  listening: string;
+  next: string;
   howAreYouFeeling: string;
   takeAMoment: string;
   chooseYourFeelings: string;
@@ -111,6 +117,12 @@ export const translations: Record<Language, Translations> = {
     redeem: 'Redeem',
     
     // Check-in page
+    shaheenWelcomesYou: 'Shaheen Welcomes You',
+    beforeYouContinue: 'Before you continue, pause for three breaths',
+    typeHere: 'Type here…',
+    useVoice: 'Use Voice',
+    listening: 'Listening...',
+    next: 'Next',
     howAreYouFeeling: 'How are you feeling today?',
     takeAMoment: 'Take a moment to reflect on your feelings. This is a safe place to explore what\'s inside you',
     chooseYourFeelings: 'Choose your feelings',
@@ -215,6 +227,12 @@ export const translations: Record<Language, Translations> = {
     redeem: 'استبدال',
     
     // Check-in page
+    shaheenWelcomesYou: 'شاهين يرحب بك',
+    beforeYouContinue: 'قبل أن تكمل، توقف لثلاثة أنفاس',
+    typeHere: 'اكتب هنا...',
+    useVoice: 'استخدم الصوت',
+    listening: 'جاري الاستماع...',
+    next: 'التالي',
     howAreYouFeeling: 'كيف تشعر اليوم؟',
     takeAMoment: 'خذ لحظة للتفكير في مشاعرك. هذا مكان آمن لاستكشاف ما بداخلك',
     chooseYourFeelings: 'اختر مشاعرك',
