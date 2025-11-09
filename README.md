@@ -34,7 +34,7 @@ make dev
 ```
 
 This will start:
-- **Web App**: http://localhost:5173
+- **Web App**: http://localhost:5173 (strict; will not auto-increment if busy)
 - **API Server**: http://localhost:8000
 - **API Docs**: http://localhost:8000/docs
 
@@ -43,6 +43,9 @@ This will start:
 ```bash
 # Web app only
 make dev-web
+
+# Web app production preview (same fixed port 5173)
+cd apps/web && npm run build && npm run preview
 
 # API only  
 make dev-api
@@ -189,6 +192,8 @@ npm run build:api
 
 # Docker deployment
 docker-compose up -d
+
+# Access web at: http://localhost:5173 (fixed via Vite strictPort & compose mapping)
 ```
 
 ### Environment-Specific Configs
