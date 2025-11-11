@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { LanguageService } from '../lib/language';
 import { PhoneFrame } from '../components/PhoneFrame';
 import { ContentModerationBadge } from '../components/ContentModeration';
+import { Feather as FeatherIcon } from 'lucide-react';
 
 interface FeatherPost {
   id: string;
@@ -49,6 +50,7 @@ export const FeathersOfHope: React.FC = () => {
   const [newFeatherText, setNewFeatherText] = useState('');
   const [userPoints, setUserPoints] = useState(150);
   const currentLanguage = LanguageService.getCurrentLanguage();
+  const coffeeCoupons = Math.floor(userPoints / 50);
 
   const handleFeatherSubmit = () => {
     if (newFeatherText.trim().length > 0 && newFeatherText.trim().length <= 200) {
@@ -87,44 +89,64 @@ export const FeathersOfHope: React.FC = () => {
 
   return (
     <PhoneFrame>
-      <div className="h-full bg-amber-50 flex flex-col pb-24">
-        <div className="w-full max-w-2xl mx-auto flex-1 overflow-y-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8"
-        >
-          <h1 className="text-3xl font-light text-stone-800 mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            ريش الأمل / Feathers of Hope
-          </h1>
-          <div className="w-16 h-1 bg-green-800 mx-auto rounded-full mb-4"></div>
-          
-          {/* User Points */}
-          <div className="flex items-center justify-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm border border-stone-200">
-            <span className="text-2xl">🪶</span>
-            <span className="text-stone-700 font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              {userPoints} نقطة / points
-            </span>
+      <div className="h-full bg-[#0E4A3B] flex flex-col pb-24">
+        <div className="flex-1 overflow-y-auto">
+          <div className="sticky top-0 z-20 px-6 pt-6 pb-4 bg-[#0E4A3B]">
+            <div className="w-full max-w-2xl mx-auto">
+              {/* Header */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-8 text-white"
+              >
+                <h1 className="text-3xl font-light mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  ريش الأمل / Feathers of Hope
+                </h1>
+                <div className="w-16 h-1 bg-white/60 mx-auto rounded-full mb-4"></div>
+                
+                {/* User Points */}
+                <div className="flex items-center justify-center gap-6 bg-white/10 backdrop-blur px-8 py-5 rounded-full border border-white/20 shadow-lg max-w-xl mx-auto">
+                  <div className="flex flex-col items-center gap-1 min-w-[120px]">
+                    <span className="text-white/70 text-xs uppercase tracking-[0.3em]">
+                      {currentLanguage === 'ar' ? 'النقاط' : 'points'}
+                    </span>
+                    <span className="text-4xl font-semibold text-white leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      {userPoints}
+                    </span>
+                  </div>
+                  <div className="w-px h-10 bg-white/20"></div>
+                  <div className="flex flex-col items-center gap-1 min-w-[120px]">
+                    <span className="text-white/70 text-xs uppercase tracking-[0.3em]">
+                      {currentLanguage === 'ar' ? 'قهوة' : 'coffee tokens'}
+                    </span>
+                    <span className="text-4xl font-semibold text-white leading-none" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      {coffeeCoupons}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </motion.div>
+          
+          <div className="px-6 pb-32">
+            <div className="w-full max-w-2xl mx-auto">
 
         {/* Create New Feather */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-3xl shadow-lg border-2 border-stone-200 p-6 mb-8"
+          className="bg-white rounded-3xl shadow-lg border border-white/10 p-6 mb-8"
         >
-          <h2 className="text-lg font-medium text-stone-700 mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <h2 className="text-lg font-medium text-[#0E4A3B] mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             اترك ريشة أمل / Leave a feather of hope
           </h2>
           <textarea
             value={newFeatherText}
             onChange={(e) => setNewFeatherText(e.target.value)}
             placeholder="اكتب رسالة أمل أو تشجيع (أقل من 200 كلمة)... / Write a message of hope or encouragement (under 200 words)..."
-            className={`w-full h-24 p-4 text-sm border-0 rounded-2xl resize-none focus:outline-none transition-all duration-300 ${
+          className={`w-full h-24 p-4 text-sm border border-[#dcdcdc] rounded-2xl resize-none focus:outline-none transition-all duration-300 ${
               currentLanguage === 'ar' ? 'text-right' : 'text-left'
             }`}
             style={{ 
@@ -143,39 +165,41 @@ export const FeathersOfHope: React.FC = () => {
               disabled={newFeatherText.trim().length === 0}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 newFeatherText.trim().length > 0
-                  ? 'bg-green-800 text-white hover:bg-green-700'
+                  ? 'bg-[#0E4A3B] text-white hover:bg-[#0c3d32]'
                   : 'bg-stone-300 text-stone-500 cursor-not-allowed'
               }`}
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
-              نشر / Post
+              {currentLanguage === 'ar' ? 'نشر' : 'Publish'}
             </button>
           </div>
         </motion.div>
 
         {/* Feathers List */}
-        <div className="space-y-4">
+        <div className="space-y-4 max-w-2xl mx-auto">
           {feathers.map((feather, index) => (
             <motion.div
               key={feather.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-              className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6"
+              className="bg-white rounded-2xl shadow-lg border border-[#d9e5dd] p-6 text-[#0E4A3B]"
             >
               <div className="flex items-start gap-4">
                 {/* Feather Icon */}
                 <div className="flex-shrink-0">
-                  <span className="text-3xl">🪶</span>
+                  <div className="w-10 h-10 rounded-full bg-[#0E4A3B] flex items-center justify-center text-white">
+                    <FeatherIcon className="w-5 h-5" />
+                  </div>
                 </div>
 
                 {/* Content */}
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-stone-500">{formatTimeAgo(feather.timestamp)}</span>
+                    <span className="text-xs text-[#0E4A3B]/60">{formatTimeAgo(feather.timestamp)}</span>
                     <ContentModerationBadge safetyScore={98} isApproved={true} />
                   </div>
-                  <p className="text-stone-700 text-sm mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', lineHeight: '1.6' }}>
+                  <p className="text-sm text-[#0E4A3B]/90 mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', lineHeight: '1.6' }}>
                     {feather.text}
                   </p>
 
@@ -184,18 +208,16 @@ export const FeathersOfHope: React.FC = () => {
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => handleFeatherVote(feather.id)}
-                        className="flex items-center gap-2 hover:scale-110 transition-transform duration-200"
+                        className="flex items-center gap-2 hover:scale-105 transition-transform duration-200 text-[#0E4A3B]"
                       >
-                        <span className="text-lg">💚</span>
-                        <span className="text-stone-600 text-sm font-medium">
-                          {feather.points}
-                        </span>
+                        <FeatherIcon className="w-4 h-4" />
+                        <span className="text-sm font-semibold">{feather.points}</span>
                       </button>
-                      <span className="text-xs text-stone-500">
+                      <span className="text-xs text-[#0E4A3B]/60">
                         {formatTimeAgo(feather.timestamp)}
                       </span>
                     </div>
-                    <span className="text-xs text-stone-500">
+                    <span className="text-xs text-[#0E4A3B]/60">
                       مجهول / Anonymous
                     </span>
                   </div>
@@ -204,8 +226,10 @@ export const FeathersOfHope: React.FC = () => {
             </motion.div>
           ))}
         </div>
-        </div>
       </div>
-    </PhoneFrame>
+    </div>
+  </div>
+</div>
+</PhoneFrame>
   );
 };

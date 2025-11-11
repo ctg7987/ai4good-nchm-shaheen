@@ -22,6 +22,7 @@ export const Story: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isAnalyzingEmotion, setIsAnalyzingEmotion] = useState(false);
   const [emotionAnalysisComplete, setEmotionAnalysisComplete] = useState(false);
+  const [suggestedCaption, setSuggestedCaption] = useState('');
   const [currentLanguage, setCurrentLanguage] = useState<Language>(LanguageService.getCurrentLanguage());
 
   useEffect(() => {
@@ -39,8 +40,8 @@ export const Story: React.FC = () => {
     { id: 'noor', name: 'Noor', nameAr: 'نور', image: '/noor.png' }
   ];
 
-  // New heading: Select a character
-  const headingText = currentLanguage === 'ar' ? 'اختر شخصية' : 'Select a character';
+  // Heading: Characters
+  const headingText = currentLanguage === 'ar' ? 'الشخصيات' : 'Characters';
   const consentLabel = currentLanguage === 'ar'
     ? 'أوافق على مشاركة قصتي بشكل مجهول'
     : 'I consent to share my story anonymously';
@@ -59,6 +60,12 @@ export const Story: React.FC = () => {
     await new Promise(r => setTimeout(r, 2000));
     setIsAnalyzingEmotion(false);
     setEmotionAnalysisComplete(true);
+    // Generate suggested caption based on emotion analysis
+    // In a real implementation, this would come from the API response
+    const captions = currentLanguage === 'ar' 
+      ? ['التحليق بنجاح', 'رحلة الأمل', 'نحو النور', 'تجربة الشجاعة']
+      : ['Successfully flying', 'Journey of hope', 'Towards the light', 'Experience of courage'];
+    setSuggestedCaption(captions[Math.floor(Math.random() * captions.length)]);
   };
 
   // Trigger analysis when consent toggled on first time
@@ -72,21 +79,26 @@ export const Story: React.FC = () => {
     if (!hasConsent || !selectedCharacter || !storedText) return;
     setIsProcessing(true);
     try {
-      // Analyze endpoint
-      await fetch('http://localhost:8000/api/narrative/analyze', {
+      // Analyze endpoint - don't wait for it, just fire and forget
+      fetch('http://localhost:8000/api/v1/narrative/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: storedText })
-      });
-      // Comic generation endpoint
-      await fetch('http://localhost:8000/api/narrative/comic', {
+      }).catch(err => console.log('Analysis request failed:', err));
+      
+      // Comic generation endpoint - don't wait for it, just fire and forget
+      fetch('http://localhost:8000/api/v1/narrative/comic', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: storedText, character: selectedCharacter.id })
-      });
-      navigate('/comic', { state: { storyText: storedText, character: selectedCharacter } });
+      }).catch(err => console.log('Comic generation request failed:', err));
+      
+      // Navigate immediately - don't wait for API responses
+      navigate('/comic', { state: { storyText: storedText, character: selectedCharacter, suggestedCaption } });
     } catch (e) {
       console.error('Generation failed', e);
+      // Navigate even on error for demo purposes
+      navigate('/comic', { state: { storyText: storedText, character: selectedCharacter, suggestedCaption } });
     } finally {
       setIsProcessing(false);
     }
@@ -112,7 +124,7 @@ export const Story: React.FC = () => {
               <h1 className="text-4xl md:text-5xl" style={{ fontFamily: '"Playfair Display", Georgia, serif', fontWeight: 600, color: '#F5F5F5' }}>{headingText}</h1>
               <div className="flex justify-center">
                 <span className="px-3 py-1 rounded-full text-xs" style={{ background: '#E9D5FF', color: '#4B0082', fontFamily: 'Inter, system-ui', fontWeight: 500 }}>
-                  {currentLanguage === 'ar' ? 'إنشاء قصة مصورة بالذكاء الاصطناعي ✋' : 'AI Comic Generation ✋'}
+                  {currentLanguage === 'ar' ? 'إنشاء قصة مصورة بالذكاء الاصطناعي' : 'AI Comic Generation'}
                 </span>
               </div>
             </motion.div>
@@ -125,7 +137,7 @@ export const Story: React.FC = () => {
                   <button
                     key={char.id}
                     onClick={() => setSelectedCharacter(char)}
-                    className={`flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border-2 transition-all ${selectedCharacter?.id === char.id ? 'border-green-700 shadow-lg scale-105' : 'border-transparent'}`}
+                    className={`flex-shrink-0 w-28 h-28 rounded-2xl overflow-hidden border-2 transition-all ${selectedCharacter?.id === char.id ? 'border-green-700 shadow-lg scale-105' : 'border-transparent'}`}
                     aria-label={currentLanguage === 'ar' ? char.nameAr : char.name}
                   >
                     <img src={char.image} alt={char.name} className="w-full h-full object-cover" />
@@ -165,7 +177,7 @@ export const Story: React.FC = () => {
                     className="w-full p-3 rounded-xl bg-green-50 border border-green-200 flex items-center justify-center gap-2"
                   >
                     <AIProcessingIndicator message={currentLanguage === 'ar' ? 'جارٍ تحليل المشاعر...' : 'Analyzing emotions...'} showBrain={false} />
-                    <AIBadge text="AI" color="green" />
+                    <AIBadge text="AI" icon="" color="green" />
                   </motion.div>
                 )}
                 {emotionAnalysisComplete && !isAnalyzingEmotion && (

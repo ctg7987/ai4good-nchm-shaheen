@@ -110,13 +110,15 @@ export const AIBadge: React.FC<AIBadgeProps> = ({
     purple: 'bg-purple-100 text-purple-800 border-purple-300'
   };
 
+  const hasIcon = icon ? icon.trim().length > 0 : false;
+  
   return (
     <motion.div
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 text-xs font-semibold ${colorClasses[color]} ${className}`}
+      className={`inline-flex items-center ${hasIcon ? 'gap-1.5' : ''} px-3 py-1 rounded-full border-2 text-xs font-semibold ${colorClasses[color]} ${className}`}
     >
-      <span>{icon}</span>
+      {hasIcon && <span>{icon}</span>}
       <span>{text}</span>
     </motion.div>
   );

@@ -168,6 +168,22 @@ export const CheckIn: React.FC = () => {
               </div>
             </motion.div>
             
+            {/* How are you feeling */}
+            <motion.h2
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="text-3xl md:text-4xl text-white"
+              style={{
+                fontFamily: '"Playfair Display", Georgia, serif',
+                fontWeight: 500,
+                letterSpacing: '0.02em'
+              }}
+              translate="no"
+            >
+              {currentLanguage === 'ar' ? 'كيف تشعر؟' : 'How are you feeling?'}
+            </motion.h2>
+
             {/* Breathing Reminder */}
             <motion.div 
               initial={{ opacity: 0 }}

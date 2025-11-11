@@ -50,7 +50,7 @@ export const CreateStory: React.FC = () => {
 
   // Heading should display a single word 'Characters' (English) or plural form in Arabic
   const titleText = isArabic ? 'الشخصيات' : 'Characters';
-  const subtitleText = isArabic ? 'إنشاء قصة مصورة بالذكاء الاصطناعي ' : 'AI Comic Generation ';
+  const subtitleText = isArabic ? 'إنشاء قصة مصورة بالذكاء الاصطناعي' : 'AI Comic Generation';
   const chooseCharacter = isArabic ? 'اختر شخصيتك' : 'Choose your character';
   const reflectionLabel = isArabic ? 'نصك المدخل' : 'Your reflection';
   const consentLabel = isArabic ? 'أوافق على مشاركة قصتي بشكل مجهول.' : 'I consent to share my story anonymously.';
@@ -85,19 +85,26 @@ export const CreateStory: React.FC = () => {
     if (!hasConsent || !selectedCharacter || !storedText) return;
     setIsGenerating(true);
     try {
-      await fetch('http://localhost:8000/api/narrative/analyze', {
+      // Analyze endpoint - don't wait for it, just fire and forget
+      fetch('http://localhost:8000/api/v1/narrative/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: storedText })
-      });
-      await fetch('http://localhost:8000/api/narrative/comic', {
+      }).catch(err => console.log('Analysis request failed:', err));
+      
+      // Comic generation endpoint - don't wait for it, just fire and forget
+      fetch('http://localhost:8000/api/v1/narrative/comic', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: storedText, character: selectedCharacter.id, emotion: analyzingText })
-      });
+      }).catch(err => console.log('Comic generation request failed:', err));
+      
+      // Navigate immediately - don't wait for API responses
       navigate('/story-result', { state: { userInput: storedText, character: selectedCharacter, emotion: 'neutral', suggestedCaption } });
     } catch (e) {
       console.error(e);
+      // Navigate even on error for demo purposes
+      navigate('/story-result', { state: { userInput: storedText, character: selectedCharacter, emotion: 'neutral', suggestedCaption } });
     } finally {
       setIsGenerating(false);
     }
@@ -161,7 +168,7 @@ export const CreateStory: React.FC = () => {
                     <div key={char.id} className="flex-shrink-0 flex flex-col items-center">
                       <button
                         onClick={() => setSelectedCharacter(char)}
-                        className={`w-24 h-24 rounded-2xl overflow-hidden border-2 transition-transform duration-200 ${selected ? 'border-[#FCD34D] shadow-[0_0_10px_rgba(252,211,77,0.3)]' : 'border-transparent'} hover:scale-[1.05] ${selected ? 'scale-[1.05]' : ''}`}
+                        className={`w-28 h-28 rounded-2xl overflow-hidden border-2 transition-transform duration-200 ${selected ? 'border-[#FCD34D] shadow-[0_0_10px_rgba(252,211,77,0.3)]' : 'border-transparent'} hover:scale-[1.05] ${selected ? 'scale-[1.05]' : ''}`}
                         aria-label={isArabic ? char.nameAr : char.name}
                       >
                         <img src={char.image} alt={char.name} className="w-full h-full object-cover" />
@@ -209,7 +216,6 @@ export const CreateStory: React.FC = () => {
                   <p className={`${isArabic ? 'text-right' : ''}`} style={{ color: '#ffffff', fontFamily: 'Inter, system-ui' }}>{consentLabel}</p>
                   <p className={`${isArabic ? 'text-right' : ''} text-sm`} style={{ color: '#9CA3AF', fontFamily: 'Inter, system-ui' }}>
                     {consentHelper}
-                    <span title={consentTooltip} className="ml-2 cursor-help">🛈</span>
                   </p>
                 </div>
               </div>
@@ -224,7 +230,7 @@ export const CreateStory: React.FC = () => {
                     className="mt-3 w-full p-3 rounded-xl bg-green-50 border border-green-200 flex items-center justify-center gap-2"
                   >
                     <AIProcessingIndicator message={analyzingText} showBrain={false} />
-                    <AIBadge text="AI" color="green" />
+                    <AIBadge text="AI" icon="" color="green" />
                   </motion.div>
                 )}
                 {emotionAnalysisComplete && !isAnalyzingEmotion && (

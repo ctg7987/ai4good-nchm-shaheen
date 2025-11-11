@@ -182,20 +182,20 @@ export const Breathing: React.FC = () => {
 
   return (
     <PhoneFrame>
-      <div className="h-full bg-amber-50 flex flex-col pb-24">
-        <div className="w-full max-w-2xl mx-auto flex-1 overflow-y-auto px-6">
+      <div className="h-full bg-[#0E4A3B] flex flex-col pb-24">
+        <div className="w-full max-w-2xl mx-auto flex-1 overflow-y-auto px-6 py-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className="text-center mb-8 text-white"
         >
-          <h1 className="text-3xl font-light text-stone-800 mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <h1 className="text-3xl font-light mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             Breathing Exercises
           </h1>
-          <div className="w-16 h-1 bg-green-800 mx-auto rounded-full mb-4"></div>
-          <p className="text-stone-600 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <div className="w-16 h-1 bg-white/60 mx-auto rounded-full mb-4"></div>
+          <p className="text-white/80 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             CBT techniques for relaxation and anxiety management
           </p>
         </motion.div>
@@ -206,14 +206,14 @@ export const Breathing: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-3xl shadow-lg border-2 border-stone-200 p-8 mb-8"
+            className="bg-white rounded-3xl shadow-lg border border-white/15 p-8 mb-8 text-[#0E4A3B]"
           >
             {/* Timer */}
             <div className="text-center mb-8">
-              <div className="text-4xl font-light text-stone-800 mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <div className="text-4xl font-light mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {formatTime(timeRemaining)}
               </div>
-              <div className="text-sm text-stone-500">
+              <div className="text-sm text-[#0E4A3B]/60">
                 دورة / Cycle {cycleCount}
               </div>
             </div>
@@ -221,7 +221,7 @@ export const Breathing: React.FC = () => {
             {/* Breathing Circle */}
             <div className="flex justify-center mb-8">
               <div className={`w-64 h-64 rounded-full transition-all duration-1000 ${getPhaseColor()} flex items-center justify-center shadow-lg`}>
-                <div className="text-white text-2xl font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <div className="text-white text-2xl font-medium text-center px-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                   {getPhaseText()}
                 </div>
               </div>
@@ -229,10 +229,10 @@ export const Breathing: React.FC = () => {
 
             {/* Exercise Info */}
             <div className="text-center mb-6">
-              <h3 className="text-xl font-medium text-stone-800 mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <h3 className="text-xl font-medium mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {currentLanguage === 'ar' ? selectedExercise.nameAr : selectedExercise.name}
               </h3>
-              <p className="text-stone-600 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <p className="text-sm text-[#0E4A3B]/70" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {currentLanguage === 'ar' ? selectedExercise.descriptionAr : selectedExercise.description}
               </p>
             </div>
@@ -241,7 +241,7 @@ export const Breathing: React.FC = () => {
             <div className="text-center">
               <button
                 onClick={handleStopExercise}
-                className="bg-red-500 text-white px-8 py-3 rounded-full font-medium hover:bg-red-600 transition-colors duration-300"
+                className="bg-red-500 text-white px-8 py-3 rounded-full font-medium hover:bg-red-600 transition-colors duration-300 shadow"
                 style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
               >
                 توقف / Stop
@@ -264,7 +264,7 @@ export const Breathing: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className={`bg-white rounded-2xl shadow-sm border border-stone-200 p-6 ${isLocked ? 'opacity-75' : ''}`}
+                  className={`bg-white rounded-2xl shadow-lg border border-white/15 p-6 ${isLocked ? 'opacity-80' : ''}`}
                 >
                   <div className="flex items-start gap-4">
                     <button
@@ -280,24 +280,24 @@ export const Breathing: React.FC = () => {
                     </button>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-lg font-medium text-stone-800" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        <h3 className="text-lg font-medium text-[#0E4A3B]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                           {currentLanguage === 'ar' ? exercise.nameAr : exercise.name}
                         </h3>
                         {isPremiumExercise && !isPremiumUser && (
-                          <span className="text-xs text-purple-600">
-                            � PREMIUM
+                          <span className="text-xs text-purple-600 font-semibold uppercase tracking-wide">
+                            Premium
                           </span>
                         )}
                       </div>
-                      <p className="text-stone-600 text-sm mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      <p className="text-[#0E4A3B]/70 text-sm mb-3" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                         {currentLanguage === 'ar' ? exercise.descriptionAr : exercise.description}
                       </p>
-                      <div className="flex items-center gap-4 text-xs text-stone-500">
+                      <div className="flex items-center gap-4 text-xs text-[#0E4A3B]/50">
                         <span>
                           Pattern: {exercise.pattern.inhale}-{exercise.pattern.hold}-{exercise.pattern.exhale}-{exercise.pattern.pause}
                         </span>
                         <span>
-                          Duration: m{Math.floor(exercise.duration / 60)}
+                          Duration: {Math.floor(exercise.duration / 60)}m
                         </span>
                       </div>
                     </div>
@@ -314,12 +314,12 @@ export const Breathing: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-8 bg-white rounded-2xl shadow-sm border border-stone-200 p-6"
+            className="mt-8 bg-white rounded-2xl shadow-lg border border-white/15 p-6 text-[#0E4A3B]"
           >
-            <h3 className="text-lg font-medium text-stone-800 mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <h3 className="text-lg font-medium mb-4" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               نصائح للتنفس الصحيح: / Tips for proper breathing:
             </h3>
-            <ul className="space-y-2 text-sm text-stone-600" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <ul className="space-y-2 text-sm text-[#0E4A3B]/70" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               <li>• اجلس أو استلقي في وضع مريح / Sit or lie in a comfortable position</li>
               <li>• اغمض عينيك وركز على تنفسك / Close your eyes and focus on your breathing</li>
               <li>• تنفس بعمق من خلال أنفك / Breathe deeply through your nose</li>

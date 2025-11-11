@@ -91,8 +91,8 @@ export const Journal: React.FC = () => {
 
   return (
     <PhoneFrame>
-      <div className="h-full bg-amber-50 flex flex-col pb-24">
-        <div className="w-full max-w-3xl mx-auto flex-1 overflow-y-auto px-6">
+      <div className="h-full bg-[#0E4A3B] flex flex-col pb-24">
+        <div className="w-full max-w-3xl mx-auto flex-1 overflow-y-auto px-6 py-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -100,11 +100,11 @@ export const Journal: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <h1 className="text-3xl font-light text-stone-800 mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <h1 className="text-3xl font-light text-white mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             يومياتي الخاصة / My Private Journal
           </h1>
-          <div className="w-16 h-1 bg-green-800 mx-auto rounded-full mb-4"></div>
-          <p className="text-stone-600 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <div className="w-16 h-1 bg-white/60 mx-auto rounded-full mb-4"></div>
+          <p className="text-white/80 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             هذا مكان آمن لكتابة أفكارك ومشاعرك / A safe space to write your thoughts and feelings
           </p>
         </motion.div>
@@ -133,7 +133,7 @@ export const Journal: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-3xl shadow-lg border-2 border-stone-200 p-8 mb-8"
+            className="bg-white rounded-3xl shadow-lg border border-white/15 p-8 mb-8"
           >
             <h2 className="text-xl font-medium text-stone-700 mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               اكتب يومياتك / Write Your Journal
@@ -177,7 +177,7 @@ export const Journal: React.FC = () => {
               value={newEntry.content}
               onChange={(e) => setNewEntry(prev => ({ ...prev, content: e.target.value }))}
               placeholder="اكتب عن يومك، مشاعرك، أفكارك... / Write about your day, feelings, thoughts..."
-              className={`w-full h-48 p-4 text-lg border-0 rounded-2xl resize-none focus:outline-none transition-all duration-300 ${
+              className={`w-full h-48 p-4 text-lg border border-[#dcdcdc] rounded-2xl resize-none focus:outline-none transition-all duration-300 ${
                 currentLanguage === 'ar' ? 'text-right' : 'text-left'
               }`}
               style={{ 
@@ -220,17 +220,17 @@ export const Journal: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-              className="bg-white rounded-2xl shadow-sm border border-stone-200 p-6"
+              className="bg-white rounded-2xl shadow-lg border border-white/15 p-6"
             >
               {/* Entry Header */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{getMoodEmoji(entry.mood)}</span>
                   <div>
-                    <h3 className="text-lg font-medium text-stone-800" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    <h3 className="text-lg font-medium text-[#0E4A3B]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                       {entry.title}
                     </h3>
-                    <p className="text-sm text-stone-500">
+                    <p className="text-sm text-[#0E4A3B]/70">
                       {formatDate(entry.date)}
                     </p>
                   </div>
@@ -238,7 +238,7 @@ export const Journal: React.FC = () => {
               </div>
 
               {/* Entry Content */}
-              <p className="text-stone-700 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', lineHeight: '1.6' }}>
+              <p className="text-[#0E4A3B]/80 text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', lineHeight: '1.6' }}>
                 {entry.content}
               </p>
             </motion.div>
@@ -251,12 +251,12 @@ export const Journal: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center py-12"
+            className="text-center py-12 text-white"
           >
-            <div className="w-24 h-24 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-4xl">📝</span>
             </div>
-            <p className="text-stone-600" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            <p className="text-white/80" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               لا توجد يوميات بعد. ابدأ بكتابة أول يومية لك! / No entries yet. Start writing your first journal entry!
             </p>
           </motion.div>
