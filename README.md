@@ -63,27 +63,12 @@ make test
 │   └── api/          # FastAPI backend
 ├── packages/
 │   └── shared/       # TypeScript types & utilities
-├── .devcontainer/     # Development environment
-├── docker-compose.yml # Multi-service orchestration
-└── Makefile          # Development commands
+└── docker-compose.yml # Multi-service orchestration
 ```
 
 ### Privacy Model
 
-```mermaid
-graph TD
-    A[User Input] --> B[Local Processing]
-    B --> C[Emotion Classification]
-    C --> D[Corpus Retrieval]
-    D --> E[Therapeutic Narrative]
-    E --> F[Local Storage Only]
-    
-    G[Optional Telemetry] --> H[Anonymous Counters]
-    H --> I[No Personal Data]
-    
-    J[Offline Mode] --> K[PWA Cache]
-    K --> L[Full Functionality]
-```
+All user data is stored locally in the browser. No personal information is sent to external servers. Optional anonymous metrics can be enabled by the user.
 
 ## Environment Configuration
 
@@ -119,20 +104,6 @@ DEBUG=false
 | `REPLICATE_API_TOKEN` | - | Enable AI art generation |
 | `OPENAI_API_KEY` | - | Enable advanced AI features |
 
-## Demo Mode
-
-For judges and evaluators, a demo mode is available in development:
-
-1. **Start the application** in development mode
-2. **Click "وضع العرض"** button (top-left)
-3. **Watch the automated journey**:
-   - Arabic mood input: "أشعر بالتوتر قبل الامتحان"
-   - Emotion classification to Therapeutic narrative
-   - Story display with Arabic metaphors
-   - Task completion (breathing exercise)
-   - Feather earning with particle animation
-   - Impact dashboard with statistics
-
 ## Privacy & Security
 
 ### Data Handling
@@ -154,31 +125,7 @@ For judges and evaluators, a demo mode is available in development:
 - **Arabic Fonts**: Optimized typography for Arabic text
 - **Cultural Sensitivity**: Content designed for Arabic-speaking users
 - **Localized UI**: All interface elements in Arabic
-
-### Language Switching
-- **Privacy Page**: Language toggle available
-- **Fallback Support**: English for international judges
-- **Accessibility**: Screen reader compatible
-
-## Testing
-
-### Test Coverage
-```bash
-# Web app tests
-npm run test:web
-
-# API tests  
-npm run test:api
-
-# Full test suite
-make test
-```
-
-### Manual Testing
-- **Offline Mode**: Disconnect internet, test PWA functionality
-- **Mobile Responsive**: Test on various screen sizes
-- **Accessibility**: Screen reader and keyboard navigation
-- **Privacy**: Verify no data leaks to external services
+- **Language Switching**: Toggle between Arabic and English
 
 ## Deployment
 
@@ -192,36 +139,7 @@ npm run build:api
 
 # Docker deployment
 docker-compose up -d
-
-# Access web at: http://localhost:5173 (fixed via Vite strictPort & compose mapping)
 ```
-
-### Environment-Specific Configs
-- **Development**: Full features, debug mode
-- **Staging**: Production-like with test data
-- **Production**: Optimized, telemetry enabled
-
-## Metrics & Analytics
-
-### Anonymous Metrics (Opt-in)
-- Session starts
-- Task completions
-- Feature usage
-- Performance data
-
-
-## Development
-
-### Code Quality
-- **ESLint**: JavaScript/TypeScript linting
-- **Prettier**: Code formatting
-- **Ruff**: Python linting
-- **TypeScript**: Type safety
-
-### Git Workflow
-- **Feature Branches**: Isolated development
-- **Pull Requests**: Code review required
-- **CI/CD**: Automated testing and deployment
 
 ## API Documentation
 
@@ -230,23 +148,16 @@ docker-compose up -d
 - `POST /api/v1/metrics` - Collect anonymous metrics
 - `GET /api/v1/health` - Health check
 - `GET /api/v1/corpus/stats` - Corpus statistics
-
-### Authentication
-- **None Required**: Privacy-first design
-- **Rate Limiting**: Prevents abuse
-- **CORS**: Configured for web app
+- **API Documentation**: http://localhost:8000/docs
 
 ## Contributing
 
-### Development Setup
-1. Fork the repository
-2. Create feature branch
-3. Make changes with tests
-4. Submit pull request
+Contributions are welcome! Please fork the repository and submit a pull request.
 
 ### Code Standards
-- **Arabic Comments**: For Arabic-specific code
 - **TypeScript**: Strict mode enabled
+- **ESLint**: JavaScript/TypeScript linting
+- **Prettier**: Code formatting
 - **Accessibility**: ARIA labels and roles
 - **Mobile-First**: Responsive design
 
@@ -254,17 +165,9 @@ docker-compose up -d
 
 MIT License - See [LICENSE](LICENSE) file for details.
 
-## Support
+## Clinical Disclaimer
 
-### Technical Issues
-- **GitHub Issues**: Bug reports and feature requests
-- **Documentation**: Comprehensive guides and examples
-- **Community**: Developer discussions
-
-### Clinical Concerns
-- **Not Medical Advice**: This app is not a substitute for professional care
-- **Crisis Resources**: Contact local mental health services
-- **Professional Help**: Consult qualified healthcare providers
+**This application is NOT a clinical tool** and does NOT provide medical diagnosis or treatment. It is designed for emotional learning and self-reflection only. For professional mental health support, please consult a qualified healthcare provider.
 
 ---
 
