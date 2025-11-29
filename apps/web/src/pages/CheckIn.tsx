@@ -11,9 +11,13 @@ export const CheckIn: React.FC = () => {
   const [textInput, setTextInput] = useState('');
   const [hasInput, setHasInput] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(LanguageService.getCurrentLanguage());
+  const [currentLanguage, setCurrentLanguage] = useState<Language>('en'); // Force English default
 
   useEffect(() => {
+    // Set English as default
+    LanguageService.setLanguage('en', false);
+    setCurrentLanguage('en');
+    
     // Listen for language changes
     const handleLanguageChange = (e: CustomEvent) => {
       setCurrentLanguage(e.detail.language);

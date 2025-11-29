@@ -40,7 +40,6 @@ export const PremiumModal: React.FC<PremiumModalProps> = ({
   currentFeature
 }) => {
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('monthly');
-  const isCompact = true;
 
   const plans = {
     monthly: {

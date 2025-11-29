@@ -57,9 +57,6 @@ export const CreateStory: React.FC = () => {
   const consentHelper = isArabic
     ? 'هذا يسمح ل شاهين بتحليل نصك وإنشاء قصة مصورة بالذكاء الاصطناعي.'
     : 'This allows Shaheen to analyze your text and create an AI comic.';
-  const consentTooltip = isArabic
-    ? 'لا يتم تخزين أي بيانات شخصية. يتم التحليل محليًا.'
-    : 'No personal data is stored. Analysis happens locally.';
   const btnLabel = isArabic ? 'حوّل قصتي ' : 'Transform My Story ';
   const analyzingText = isArabic ? 'جارٍ تحليل المشاعر...' : 'Analyzing emotions...';
   const analyzingStoryText = isArabic ? 'جارٍ تحليل قصتك…' : 'Analyzing your story…';
