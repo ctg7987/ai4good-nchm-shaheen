@@ -24,7 +24,6 @@ Shaheen won **Second Place (USD 12,000)** in the **startAD AI for Good Sandbox H
 
 ## Non-Clinical Disclaimer
 
-**غير سريري — أداة للتعلم العاطفي فقط**
 
 This application is NOT a clinical tool and does NOT provide medical diagnosis or treatment. It is designed for emotional learning and self-reflection only. For professional mental health support, please consult a qualified healthcare provider.
 
