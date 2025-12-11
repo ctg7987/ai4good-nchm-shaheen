@@ -1,10 +1,26 @@
-# Shaheen - Arabic Emotional Learning Companion
+# Shaheen — AI for Emotional Wellness in the MENA Region
 
-A privacy-first, non-clinical Arabic emotional learning application that helps users explore their feelings through therapeutic narratives, breathing exercises, and journaling.
+Shaheen is an AI-powered emotional wellness companion built for youth in the MENA region. The app transforms a user's feelings into a gentle, expressive comic using local language models and a culturally grounded design. All processing is private, anonymous, and optimized for low-stigma emotional support.
 
-## Overview
+## 🏆 Achievement — 2nd Place Winner (USD 12,000)
 
-This application provides a safe, culturally-sensitive platform for Arabic speakers to explore their emotions through therapeutic narratives, breathing exercises, and journaling. Built with privacy-by-design principles and offline-first architecture.
+Shaheen won **Second Place (USD 12,000)** in the **startAD AI for Good Sandbox Hackathon 2025**, supported by Google.org.
+
+- **Nearly 1,000 applicants**
+- **~300 accepted into Cohort 2**
+- **60 teams in competition**
+- **Top 15 finalists**
+- **Shaheen awarded 2nd place overall**
+
+**Partners included:** National Center for Mental Health Promotion (NCMH – Saudi Arabia), startAD, ZAKA زكا, 42 Abu Dhabi, and Google.org.
+
+## 📱 Screenshots
+
+### English Landing Page
+![English Landing Page](screenshots/english-landing.png)
+
+### Arabic Landing Page
+![Arabic Landing Page](screenshots/arabic-landing.png)
 
 ## Non-Clinical Disclaimer
 
