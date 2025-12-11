@@ -304,7 +304,7 @@ export const translations: Record<Language, Translations> = {
     howResponsesGenerated: 'كيف يتم توليد الردود',
     
     // Non-clinical banner
-    nonClinicalBanner: 'غير سريري — أداة للتعلم العاطفي فقط',
+    nonClinicalBanner: 'Non-clinical — Emotional learning tool only',
     
     // Redemption modal
     redeemFeathers: 'استبدال الريش',
