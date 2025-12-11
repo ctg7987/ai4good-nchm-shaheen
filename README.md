@@ -16,10 +16,10 @@ Shaheen won **Second Place (USD 12,000)** in the **startAD AI for Good Sandbox H
 
 ## 📱 Screenshots
 
-### English Landing Page
+### Arabic Landing Page
 ![English Landing Page](screenshots/english-landing.png)
 
-### Arabic Landing Page
+### English Landing Page
 ![Arabic Landing Page](screenshots/arabic-landing.png)
 
 ## Non-Clinical Disclaimer
