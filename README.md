@@ -4,7 +4,7 @@ Shaheen is an AI-powered emotional wellness companion built for youth in the MEN
 
 ## 🏆 Achievement - 2nd Place Winner
 
-Shaheen won **Second Place (USD 12,000)** in the **startAD AI for Good Sandbox Hackathon 2025**, supported by Google.org.
+Shaheen won **Second Place** in the **startAD AI for Good Sandbox Hackathon 2025**, supported by Google.org.
 
 - **Nearly 1,000 applicants**
 - **~300 accepted into Cohort 2**
