@@ -2,7 +2,7 @@
 
 Shaheen is an AI-powered emotional wellness companion built for youth in the MENA region. The app transforms a user's feelings into a gentle, expressive comic using local language models and a culturally grounded design. All processing is private, anonymous, and optimized for low-stigma emotional support.
 
-## 🏆 Achievement - 2nd Place Winner (USD 12,000)
+## 🏆 Achievement - 2nd Place Winner
 
 Shaheen won **Second Place (USD 12,000)** in the **startAD AI for Good Sandbox Hackathon 2025**, supported by Google.org.
 
