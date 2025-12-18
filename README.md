@@ -7,7 +7,7 @@ Shaheen is an AI-powered emotional wellness companion built for youth in the MEN
 Shaheen won **Second Place** in the **startAD AI for Good Sandbox Hackathon 2025**, supported by Google.org.
 
 - **Nearly 1,000 applicants**
-- **~300 accepted into Cohort 2**
+- **~300 accepted**
 - **60 teams in competition**
 - **Top 15 finalists**
 - **Shaheen awarded 2nd place overall**
