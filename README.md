@@ -14,8 +14,6 @@ Shaheen won **Second Place** in the **startAD AI for Good Sandbox Hackathon 2025
 
 **Partners included:** National Center for Mental Health Promotion (NCMH – Saudi Arabia), startAD, ZAKA زكا, 42 Abu Dhabi, and Google.org.
 
-## Screenshots
-
 ### Arabic Landing Page
 ![English Landing Page](screenshots/english-landing.png)
 
