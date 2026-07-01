@@ -22,7 +22,6 @@ Shaheen won **Second Place** in the **startAD AI for Good Sandbox Hackathon 2025
 
 ## Non-Clinical Disclaimer
 
-
 This application is NOT a clinical tool and does NOT provide medical diagnosis or treatment. It is designed for emotional learning and self-reflection only. For professional mental health support, please consult a qualified healthcare provider.
 
 ## Quick Start
@@ -176,7 +175,12 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) file for details.
+*Code* (all `.ts`, `.tsx`, `.py`, `.js` files): [MIT License](./LICENSE)  
+*Non-code assets* (illustrations, documentation, screenshots, supporting materials): [CC BY 4.0](./LICENSE-CC-BY)
+
+Illustrations were generated using AI tools. Copyright status may vary by jurisdiction.
+
+AI-generated illustrations are included under CC BY 4.0 to the extent permitted by applicable law.
 
 ## Clinical Disclaimer
 
