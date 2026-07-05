@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { PhoneFrame } from '../components/PhoneFrame';
 import { LanguageService, Language } from '../lib/language';
 import { AIProcessingIndicator, AIBadge } from '../components/AIProcessingIndicator';
+import { API_BASE_URL } from '../lib/api';
 
 interface Character {
   id: string;
@@ -82,19 +83,19 @@ export const CreateStory: React.FC = () => {
     if (!hasConsent || !selectedCharacter || !storedText) return;
     setIsGenerating(true);
     try {
-      // Analyze endpoint - don't wait for it, just fire and forget
-      fetch('http://localhost:8000/api/v1/narrative/analyze', {
+      // Analyze endpoint - fire and forget
+      fetch(`${API_BASE_URL}/api/v1/narrative/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: storedText })
-      }).catch(err => console.log('Analysis request failed:', err));
-      
-      // Comic generation endpoint - don't wait for it, just fire and forget
-      fetch('http://localhost:8000/api/v1/narrative/comic', {
+      }).catch(() => {});
+
+      // Comic generation endpoint - fire and forget
+      fetch(`${API_BASE_URL}/api/v1/narrative/comic`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: storedText, character: selectedCharacter.id, emotion: analyzingText })
-      }).catch(err => console.log('Comic generation request failed:', err));
+      }).catch(() => {});
       
       // Navigate immediately - don't wait for API responses
       navigate('/story-result', { state: { userInput: storedText, character: selectedCharacter, emotion: 'neutral', suggestedCaption } });
